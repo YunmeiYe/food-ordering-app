@@ -1,9 +1,10 @@
-"use client"
-import Google from "@/icons/Google"
+"use client";
+import Google from "@/icons/Google";
 import { Button, Divider } from "@nextui-org/react";
 import { SyntheticEvent, useState } from "react";
 import ModalContainer from "@/components/layout/ModalContainer";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +21,6 @@ const RegisterPage = () => {
       body: JSON.stringify({ email, password }),
       headers: { 'Content-Type': 'application/json' }
     });
-    console.log(response);
     if (response.ok) {
       setUserCreated(true);
       setEmail('');
@@ -42,17 +42,19 @@ const RegisterPage = () => {
         <Button type="submit" disabled={creatingUser} fullWidth isLoading={creatingUser} className="font-semibold text-medium">Sign Up</Button>
         <div className="text-center mt-4 text-gray-500">
           Already have an account? {' '}
-          <Link href={"/login"} className="underline text-secondary">Login here &raquo;</Link>
+          <Link href={"/login"} className="underline text-secondary">Login</Link>
         </div>
         <div className="my-3 text-center text-gray-500 grid grid-cols-3 items-center">
           <Divider />
           OR
           <Divider />
         </div>
-        <button className="items-center w-full" disabled={creatingUser}>
+        <Button
+          onClick={()=>signIn('google', { callbackUrl:'/'})}
+          className="items-center font-semibold text-medium text-gray-700 bg-white border border-gray-300" fullWidth disabled={creatingUser}>
           <Google className={"w-6"} />
-          Sign Up with Google
-        </button>
+          Login with Google
+        </Button>
       </form>
       <ModalContainer isOpen={userCreated} onConfirm={() => setUserCreated(false)} title={"Congratulations!"} content={"Registration successful! You can now log in."} redirectLink="/login"/>
       <ModalContainer isOpen={error} onConfirm={() => setError(false)} title={"Error"} content={"Oops, something went wrong. Please try again later."}/>

@@ -27,7 +27,7 @@ const Hero = () => {
         </div>
       </div>
       <div className="relative">
-        <Image src={"/assets/pizza.png"} alt={"pizza"} fill className="object-contain" />
+        <Image src={"/assets/pizza.png"} alt={"pizza"} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority className="object-contain" />
       </div>
     </section>
   )

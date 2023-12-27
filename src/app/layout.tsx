@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import {UIProvider} from "./providers";
+import {AppContextProvider, UIProvider} from "../components/providers";
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 
@@ -22,9 +22,11 @@ export default function RootLayout({
       <body className={roboto.className}>
         <UIProvider>
           <main className='max-w-6xl mx-auto p-4 pb-0'>
+            <AppContextProvider>
             <Header />
             {children}
             <Footer />
+            </AppContextProvider>
           </main>
         </UIProvider>
       </body>
