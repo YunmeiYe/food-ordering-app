@@ -4,7 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 
 const Header = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+
+  const user = session?.user;
+  let userName = user?.name || user?.email;
+  if (user && userName?.includes(' ')) userName = userName.split(' ')[0];
+
   return (
     <header className="flex items-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
@@ -16,7 +21,13 @@ const Header = () => {
       </nav>
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
         {status === "authenticated" ? (
-          <button onClick={()=> signOut()} className="bg-primary rounded-full text-white px-8 py-2">Logout</button>
+          <>
+            <div>
+              <Link href={'/profile'}>Hello, {userName}</Link>
+            </div>
+            <button onClick={() => signOut()} className="bg-primary rounded-full text-white px-8 py-2">Logout</button>
+          </>
+
         ) : (
           <>
             <Link href={'/login'}>Login</Link>

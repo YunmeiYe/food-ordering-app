@@ -17,7 +17,7 @@ const ModalContainer = ({ isOpen, title, content, redirectLink, onConfirm }: Mod
         {(onClose) => (
           <>
             <ModalBody>
-              <h1 className="text-xl font-semibold">{title}</h1>
+              <h1 className="text-lg font-semibold">{title}</h1>
               <p>
                 {content}
               </p>

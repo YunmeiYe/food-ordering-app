@@ -1,7 +1,7 @@
 "use client";
 import Google from "@/icons/Google";
 import { Button, Divider } from "@nextui-org/react";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import ModalContainer from "@/components/layout/ModalContainer";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [loginInProgress, setLoginInProgress] = useState(false);
   const [error, setError] = useState(false);
 
-  async function handleFormSubmit(event: SyntheticEvent<HTMLFormElement>) {
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoginInProgress(true);
     const response = await signIn('credentials', { email, password, redirect:false});

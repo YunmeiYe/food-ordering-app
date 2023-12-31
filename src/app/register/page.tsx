@@ -1,7 +1,7 @@
 "use client";
 import Google from "@/icons/Google";
 import { Button, Divider } from "@nextui-org/react";
-import { SyntheticEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import ModalContainer from "@/components/layout/ModalContainer";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -13,12 +13,12 @@ const RegisterPage = () => {
   const [userCreated, setUserCreated] = useState(false);
   const [error, setError] = useState(false);
 
-  async function handleFormSubmit(event: SyntheticEvent<HTMLFormElement>) {
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setCreatingUser(true);
     const response = await fetch(`/api/register`, {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password}),
       headers: { 'Content-Type': 'application/json' }
     });
     if (response.ok) {
