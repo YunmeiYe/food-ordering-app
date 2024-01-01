@@ -7,27 +7,17 @@ section.hero{
   grid-template-columns: .4fr .6fr;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="text"] {
+.input {
   @apply block w-full mb-2 rounded-xl;
   @apply border p-2 border-gray-300 bg-gray-100
 }
 
-input[type="email"]:disabled,
-input[type="password"]:disabled,
-input[type="tel"]:disabled,
-input[type="text"]:disabled {
-  @apply bg-gray-300 border-0 text-gray-500 cursor-not-allowed
+input:disabled {
+  @apply cursor-not-allowed bg-gray-300
 }
 
 label{
   @apply text-gray-500 text-sm leading-tight;
-}
-
-label + input{
-  margin-top: -2px;
 }
 
 button:disabled, .button:disabled {

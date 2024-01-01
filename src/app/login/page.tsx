@@ -1,27 +1,28 @@
 "use client";
-import Google from "@/icons/Google";
-import { Button, Divider } from "@nextui-org/react";
+import GoogleIcon from "@/icons/GoogleIcon";
+import { Button, Divider, Link } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
-import ModalContainer from "@/components/layout/ModalContainer";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import EmailInput from "@/components/EmailInput";
+import PasswordInput from "@/components/PasswordInput";
 
 const LoginPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginInProgress, setLoginInProgress] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoginInProgress(true);
-    const response = await signIn('credentials', { email, password, redirect:false});
+    setError('');
+    const response = await signIn('credentials', { email, password, redirect: false });
     if (response?.ok) {
       router.push('/')
     } else {
-      setError(true);
+      setError("The email or password you entered is incorrect.");
     }
     setLoginInProgress(false);
   }
@@ -32,12 +33,13 @@ const LoginPage = () => {
         Login
       </h1>
       <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
-        <input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} disabled={loginInProgress} />
-        <input type="password" name="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} disabled={loginInProgress} />
-        <Button type="submit" disabled={loginInProgress} fullWidth isLoading={loginInProgress} className="font-semibold text-medium">Login</Button>
+        <EmailInput emailValue={email} setEmail={setEmail} disabled={loginInProgress} />
+        <PasswordInput passwordValue={password} setPassword={setPassword} disabled={loginInProgress} />
+        <div className="text-red-600">{error}</div>
+        <Button type="submit" disabled={loginInProgress} fullWidth isLoading={loginInProgress} className="font-semibold text-medium mt-4">Login</Button>
         <div className="text-center mt-4 text-gray-500">
           Don't have an account? {' '}
-          <Link href={"/register"} className="underline text-secondary">Sign Up</Link>
+          <Link href={"/register"}>Sign Up</Link>
         </div>
         <div className="my-3 text-center text-gray-500 grid grid-cols-3 items-center">
           <Divider />
@@ -45,13 +47,12 @@ const LoginPage = () => {
           <Divider />
         </div>
         <Button
-          onClick={()=>signIn('google', { callbackUrl:'/'})}
+          onClick={() => signIn('google', { callbackUrl: '/' })}
           className="items-center font-semibold text-medium text-gray-700 bg-white border border-gray-300" fullWidth disabled={loginInProgress}>
-          <Google className={"w-6"} />
+          <GoogleIcon className={"w-6"} />
           Login with Google
         </Button>
       </form>
-      <ModalContainer isOpen={error} onConfirm={() => setError(false)} title={"Error"} content={"Oops, something went wrong. Please try again later."} />
     </section>
   )
 }

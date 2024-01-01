@@ -1,6 +1,6 @@
 import { IconProps } from "./IconProps"
 
-const Google = ({ className }: IconProps) => (
+const GoogleIcon = ({ className }: IconProps) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={`h-auto ${className}`}>
     <path
       fill="#4285F4"
@@ -21,4 +21,4 @@ const Google = ({ className }: IconProps) => (
     <path fill="none" d="M1 1h22v22H1z" />
   </svg>
 )
-export default Google
+export default GoogleIcon

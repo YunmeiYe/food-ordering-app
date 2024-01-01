@@ -8,8 +8,8 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     validate: (password: string) => {
-      if (!password.length || password.length < 5) {
-        new Error('Password must be at least 5 characters');
+      if (!password.length || password.length < 8) {
+        new Error('Password must be at least 8 characters');
         return false;
       }
     }

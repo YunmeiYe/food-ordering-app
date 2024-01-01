@@ -1,4 +1,4 @@
-import RightArrow from "@/icons/RightArrow"
+import RightArrowIcon from "@/icons/RightArrowIcon"
 import Image from "next/image"
 
 const Hero = () => {
@@ -17,12 +17,12 @@ const Hero = () => {
         <div className="flex gap-4 text-sm">
           <button className="bg-primary uppercase flex items-center gap-2 text-white px-4 py-2 rounded-full">
             Order now
-            <RightArrow className={"w-6"} />
+            <RightArrowIcon className={"w-6"} />
 
           </button>
           <button className="flex gap-2 py-2 text-gray-600 font-semibold">
             Learn more
-            <RightArrow className={"w-6"} />
+            <RightArrowIcon className={"w-6"} />
           </button>
         </div>
       </div>

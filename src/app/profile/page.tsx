@@ -1,6 +1,6 @@
 'use client'
-import FileUploadModal from '@/components/layout/FileUploadModal';
-import { Pencil } from '@/icons/Pencil';
+import FileUploadModal from '@/components/FileUploadModal';
+import { PencilIcon } from '@/icons/PencilIcon';
 import { Avatar, Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation';
@@ -21,9 +21,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (status === 'authenticated') {
+      setuserImage(session.user?.image!);
       fetch('/api/profile').then(res => res.json()).then(data => {
         setUserName(data.name);
-        setuserImage(data.image);
         setPhone(data.phone);
         setStreetAddress(data.streetAddress);
         setCity(data.city);
@@ -110,40 +110,40 @@ const ProfilePage = () => {
                 <Avatar className="w-[120px] h-[120px]" />
               )}
               <div className='bg-primary text-white rounded-full p-2 absolute right-3 bottom-3 hover:bg-red-400'>
-                <Pencil className={'w-4'} />
+                <PencilIcon className={'w-4'} />
               </div>
             </div>
           </div>
           <form className='col-span-4' onSubmit={handleProfileUpdate}>
             <label> Full name</label>
-            <input type="text" placeholder='Full name' value={userName ?? ''} onChange={e => setUserName(e.target.value)} />
+            <input type="text" placeholder='Full name' value={userName ?? ''} onChange={e => setUserName(e.target.value)} className='input'/>
             <label> Email</label>
-            <input type="email" placeholder="Email" value={session?.user?.email!} disabled />
+            <input type="email" placeholder="Email" value={session?.user?.email!} disabled className='input'/>
             <label> Phone number</label>
-            <input type="tel" placeholder='Phone number' value={phone ?? ''} onChange={e => setPhone(e.target.value)} />
+            <input type="tel" placeholder='Phone number' value={phone ?? ''} onChange={e => setPhone(e.target.value)} className='input'/>
             <label> Street address</label>
-            <input type="text" placeholder='Street address' value={streetAddress ?? ''} onChange={e => setStreetAddress(e.target.value)} />
+            <input type="text" placeholder='Street address' value={streetAddress ?? ''} onChange={e => setStreetAddress(e.target.value)} className='input'/>
             <div className='grid grid-cols-2 gap-2'>
               <div>
                 <label> City</label>
-                <input type="text" placeholder='City' value={city ?? ''} onChange={e => setCity(e.target.value)} />
+                <input type="text" placeholder='City' value={city ?? ''} onChange={e => setCity(e.target.value)} className='input'/>
               </div>
               <div>
                 <label> State</label>
-                <input type="text" placeholder='State' value={state ?? ''} onChange={e => setState(e.target.value)} />
+                <input type="text" placeholder='State' value={state ?? ''} onChange={e => setState(e.target.value)} className='input'/>
               </div>
             </div>
             <div className='grid grid-cols-2 gap-2'>
               <div>
                 <label> Country</label>
-                <input type="text" placeholder='Country' value={country ?? ''} onChange={e => setCountry(e.target.value)} />
+                <input type="text" placeholder='Country' value={country ?? ''} onChange={e => setCountry(e.target.value)} className='input'/>
               </div>
               <div>
                 <label> Postal code</label>
-                <input type="text" placeholder='Postal code' value={postalCode ?? ''} onChange={e => setPostalCode(e.target.value)} />
+                <input type="text" placeholder='Postal code' value={postalCode ?? ''} onChange={e => setPostalCode(e.target.value)} className='input'/>
               </div>
             </div>
-            <Button type='submit' className='font-semibold text-medium' fullWidth >Save All Changes</Button>
+            <Button type='submit' className='font-semibold text-medium mt-2' fullWidth >Save All Changes</Button>
           </form>
         </div>
       </div>

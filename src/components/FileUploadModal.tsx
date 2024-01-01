@@ -1,4 +1,4 @@
-import { Tick } from "@/icons/Tick";
+import { TickIcon } from "@/icons/TickIcon";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
 
@@ -57,7 +57,7 @@ const FileUploadModal = ({ isOpen, onConfirm, onUpdate }: FileUploadModalProps) 
                 )}
               </label>
               <div className={`text-center items-center mt-2 ${imageUploaded ? "flex flex-col" : "hidden"}`}>
-                <Tick className={"w-[80px]"} />
+                <TickIcon className={"w-[80px]"} />
                 Image upload success
               </div>
             </ModalBody>
