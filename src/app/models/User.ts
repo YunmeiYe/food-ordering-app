@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 import bcrypt from 'bcrypt'
 
 const UserSchema = new Schema({
-  name: {type: String},
+  name: { type: String },
   email: { type: String, required: true, unique: true },
   password: {
     type: String,
@@ -21,6 +21,7 @@ const UserSchema = new Schema({
   city: { type: String },
   state: { type: String },
   country: { type: String },
+  isAdmin: { type: Boolean, default: false },
 }, { timestamps: true });
 
 UserSchema.post('validate', function (user) {

@@ -15,7 +15,7 @@ const FileUploadModal = ({ isOpen, onConfirm, onUpdate }: FileUploadModalProps) 
   const [imageUploaded, setImageUploaded] = useState(false);
   const [imageLink, setImageLink] = useState('');
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
 
     if (files && files.length === 1) {
