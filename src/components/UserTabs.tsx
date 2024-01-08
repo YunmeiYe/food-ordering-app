@@ -37,7 +37,7 @@ const UserTabs = ({ admin }: UserTabsProps) => {
             }
           />
           <Tab
-            key="/menu-items"
+            key={pathname.includes("/menu-items/new") ? "/menu-items/new" : (pathname.includes("/menu-items/edit") ? pathname : "/menu-items")}
             href="/menu-items"
             title={
               <div className="flex items-center space-x-2">
