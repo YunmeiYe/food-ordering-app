@@ -52,7 +52,7 @@ const CategoriesPage = () => {
       const response = await fetch("/api/categories", {
         method: selectedCategory ? "PUT" : "POST",
         body: JSON.stringify(data),
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
       }).then((response) => response.json());
 
       if (response.error) {
@@ -71,19 +71,39 @@ const CategoriesPage = () => {
 
     toast.promise(creationPromise, {
       loading: selectedCategory ? "Updating category..." : "Creating new category...",
-      success: selectedCategory ? "Category updated!" : "Category created!",
+      success: selectedCategory ? "Update success!" : "Category created!",
       error: selectedCategory ? "Error updating category" : "Error creating category"
+    });
+  }
+
+  async function handleDeleteCategory(category: Category) {
+    const deletionPromise = new Promise(async (resolve, reject) => { 
+      const response = await fetch(`/api/categories?_id=${category._id}`, {
+        method: "DELETE"
+      }).then((response) => response.json());
+      if (response.error) {
+        reject();
+      } else {
+        fetchCategories();
+        resolve(response);
+      }
+    })
+
+    toast.promise(deletionPromise, {
+      loading: "Deleting category...",
+      success: "Category deleted!",
+      error: "Error deleting category"
     });
   }
 
   return (
     <section className="my-8">
       <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-xl mx-auto mt-12">
-        <div className="grid grid-cols-12 items-center">
-          <h1 className="col-span-6 text-xl">Categories</h1>
+      <div className="block max-w-2xl mx-auto mt-12">
+        <div className="flex">
+          <h1 className="text-xl grow">Categories</h1>
           <Button
-            className={`col-span-6 place-self-end ${showAddNewBtn ? "" : "hidden"}`}
+            className={`${showAddNewBtn ? "" : "hidden"}`}
             color="primary"
             disabled={submitting}
             endContent={<PlusIcon className={"w-6"} />}
@@ -120,16 +140,15 @@ const CategoriesPage = () => {
               label={selectedCategory ? `Selected Category: ${selectedCategory.name}` : "New category"}
               labelPlacement="outside"
               placeholder={selectedCategory ? "Update category name" : "Enter new category name"}
-              classNames={{ inputWrapper: "py-0 pr-0 h-auto", input: "text-medium" }}
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
-              disabled={submitting}
+              isDisabled={submitting}
             />
             <div className="flex gap-2 mt-4">
-              <Button type="submit" color="primary" fullWidth disabled={submitting} >
+              <Button type="submit" color="primary" fullWidth disabled={submitting}>
                 {selectedCategory ? "Save Changes" : "Add Category"}
               </Button>
-              <Button className="px-12 bg-red-100 border-red-300 border-2" disabled={submitting} onClick={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
+              <Button className="px-12 bg-transparent border-2 border-gray-700" disabled={submitting} onClick={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
                 Cancel
               </Button>
             </div>
@@ -138,7 +157,8 @@ const CategoriesPage = () => {
         <div className="text-red-600 mt-3">{error}</div>
         <div className="mt-8">
           <CategoriesTable
-            onEdit={(category) => { setShowAddNewBtn(false), setSelectedCategory(category), setCategoryImage(category.image), setError('') }}
+            onEdit={(category) => { setShowAddNewBtn(false), setSelectedCategory(category), setCategoryImage(category.image), setError('') } }
+            onDelete={(category) => { handleDeleteCategory(category) }}
             categories={categories}
           />
         </div>

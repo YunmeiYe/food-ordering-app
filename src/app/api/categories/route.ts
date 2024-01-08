@@ -53,3 +53,15 @@ export async function GET() {
     return NextResponse.json(err);
   }
 }
+
+export async function DELETE(req: NextRequest) { 
+  try {
+    mongoose.connect(process.env.MONGODB_URI!);
+    const url = new URL(req.url);
+    const _id = url.searchParams.get('_id');
+    const deleteResult = await Category.deleteOne({ _id });
+    return NextResponse.json(deleteResult);
+  } catch (err) {
+    return NextResponse.json(err);
+  }
+}
