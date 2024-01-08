@@ -1,12 +1,12 @@
 "use client";
-import Google from "@/icons/GoogleIcon";
-import { Button, Divider, Input, Link } from "@nextui-org/react";
+import GoogleIcon from "@/icons/GoogleIcon";
+import { Button, Divider, Link } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
 import ModalContainer from "@/components/ModalContainer";
 import { signIn } from "next-auth/react";
 import EmailInput from "@/components/EmailInput";
 import PasswordInput from "@/components/PasswordInput";
-import { UserIcon } from "@/icons/UserIcon";
+import NameInput from "@/components/NameInput";
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -38,28 +38,15 @@ const RegisterPage = () => {
       <h1 className="text-center text-primary text-4xl my-4">
         Sign Up
       </h1>
-      <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
-        <Input
-          isRequired
-          label="Name"
-          placeholder="Enter your full name"
-          type="text"
-          className="mb-3"
-          size="lg"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          disabled={creatingUser}
-          endContent={
-            <UserIcon className={`w-6 ${creatingUser ? "stroke-gray-500 cursor-not-allowed" : ""} `}/>
-          }
-        />
-        <EmailInput emailValue={email} setEmail={setEmail} disabled={creatingUser} />
+      <form className="block max-w-lg mx-auto mt-12" onSubmit={handleFormSubmit}>
+        <NameInput nameValue={name} setName={setName} disabled={creatingUser} className={"mb-4"} />
+        <EmailInput emailValue={email} setEmail={setEmail} disabled={creatingUser} className={"mb-4"} />
         <PasswordInput passwordValue={password} setPassword={setPassword} disabled={creatingUser}/>
-        <div className="text-red-600">{error}</div>
-        <Button type="submit" disabled={creatingUser} fullWidth isLoading={creatingUser} className="font-semibold text-medium mt-4">Sign Up</Button>
+        <div className="text-red-600 my-2">{error}</div>
+        <Button type="submit" color="primary" fullWidth isLoading={creatingUser} isDisabled={creatingUser} className="mt-6">Sign Up</Button>
         <div className="text-center mt-4 text-gray-500">
           Already have an account? {' '}
-          <Link href={"/login"} >Login</Link>
+          <Link href={"/login"} isDisabled={creatingUser}>Login</Link>
         </div>
         <div className="my-3 text-center text-gray-500 grid grid-cols-3 items-center">
           <Divider />
@@ -67,13 +54,23 @@ const RegisterPage = () => {
           <Divider />
         </div>
         <Button
+          fullWidth 
+          disabled={creatingUser}
           onClick={() => signIn('google', { callbackUrl: '/' })}
-          className="items-center font-semibold text-medium text-gray-700 bg-white border border-gray-300" fullWidth disabled={creatingUser}>
-          <Google className={"w-6"} />
+          className="font-semibold text-gray-700 bg-white border border-gray-300"
+          startContent={<GoogleIcon className={"w-6"} />}>
           Login with Google
         </Button>
       </form>
-      <ModalContainer isOpen={userCreated} onConfirm={() => setUserCreated(false)} title={"Registration successful!"} content={"You can now log in."} redirectLink="/login" />
+      <ModalContainer
+        isOpen={userCreated}
+        title={"Registration successful!"}
+        content={"You can now log in."}
+        confirmText={"OK"}
+        onConfirm={() => setUserCreated(false)}
+        redirectLink="/login"
+        redirectText="Login"
+        />
     </section>
   )
 }

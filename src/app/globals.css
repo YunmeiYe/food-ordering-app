@@ -8,26 +8,36 @@ section.hero{
 }
 
 .input {
-  @apply block w-full mb-2 rounded-xl;
-  @apply border p-2 border-gray-300 bg-gray-100
+  @apply block w-full mb-2 rounded-xl border p-2 border-gray-300 bg-gray-100
 }
 
-input:disabled {
+.input:disabled{
   @apply cursor-not-allowed bg-gray-300
+}
+
+*[data-slot="input"] {
+  @apply border-0 mb-0 px-0 text-medium
 }
 
 label{
   @apply text-gray-500 text-sm leading-tight;
 }
 
-button:disabled, .button:disabled {
+button[type="button"], a[role="button"] {
+  @apply text-medium
+}
+
+button[type="submit"]{
+  @apply border-primary bg-primary text-white text-medium font-semibold
+}
+
+button:disabled {
   @apply bg-gray-300 text-gray-500 cursor-not-allowed
 }
 
-button[type="submit"], .submit {
-@apply border-primary bg-primary text-white
+button[type="submit"]:disabled {
+  @apply bg-red-400 border-0 cursor-not-allowed
 }
 
-button[type="submit"]:disabled, .submit:disabled {
-@apply bg-red-400 border-0 cursor-not-allowed
-}
+
+

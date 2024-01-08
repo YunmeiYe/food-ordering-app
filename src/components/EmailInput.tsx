@@ -6,9 +6,10 @@ interface EmailInputProps {
   emailValue: string;
   setEmail: (email: string) => void;
   disabled: boolean;
+  className?: string;
 }
 
-const EmailInput = ({ emailValue, setEmail, disabled }: EmailInputProps) => {
+const EmailInput = ({ emailValue, setEmail, disabled, className }: EmailInputProps) => {
   const validateEmail = (email: string) => {
     return email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
   };
@@ -24,18 +25,15 @@ const EmailInput = ({ emailValue, setEmail, disabled }: EmailInputProps) => {
       label="Email"
       placeholder="Enter your email"
       type="email"
-      className="mb-3"
-      size="lg"
+      className={className}
       isInvalid={isInvalid}
       errorMessage={isInvalid && "Please enter a valid email"}
       value={emailValue}
       onChange={e => setEmail(e.target.value)}
-      disabled={disabled}
+      isDisabled={disabled}
       endContent={
         <MailIcon
-          className={`w-6 
-          ${isInvalid ? "stroke-red-500" : ""} 
-          ${disabled ? "stroke-gray-500 cursor-not-allowed" : ""}`} />
+          className={`w-6 place-self-center ${isInvalid ? "stroke-red-500" : ""}`} />
       }
     />
   )

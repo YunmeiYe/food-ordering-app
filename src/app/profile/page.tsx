@@ -103,7 +103,7 @@ const ProfilePage = () => {
   return (
     <section className="my-8">
       <UserTabs admin={isAdmin} />
-      <div className="block max-w-md mx-auto mt-12">
+      <div className="block max-w-2xl mx-auto mt-12">
         <div className='grid grid-cols-6 gap-4'>
           <div className='col-span-2'>
             <ImageUploader
@@ -112,12 +112,12 @@ const ProfilePage = () => {
               children={
                 <div className='relative'>
                   {userImage ? (
-                    <Avatar src={userImage!} className="w-[120px] h-[120px]" />
+                    <Avatar src={userImage!} className="w-[180px] h-[180px]" />
                   ) : (
                     <Avatar className="w-[120px] h-[120px]" />
                   )}
-                  <div className='bg-primary text-white rounded-full p-2 absolute right-3 bottom-3 hover:bg-red-400'>
-                    <PencilIcon className={'w-4'} />
+                  <div className='bg-primary text-white rounded-full p-2 absolute right-7 bottom-6 hover:bg-red-400'>
+                    <PencilIcon className={'w-5'} />
                   </div>
                 </div>
               }
@@ -152,7 +152,7 @@ const ProfilePage = () => {
                 <input type="text" placeholder='Postal code' value={postalCode ?? ''} onChange={e => setPostalCode(e.target.value)} className='input' />
               </div>
             </div>
-            <Button type='submit' className='font-semibold text-medium mt-2' fullWidth >Save All Changes</Button>
+            <Button type='submit' className='mt-2' fullWidth >Save All Changes</Button>
           </form>
         </div>
       </div>

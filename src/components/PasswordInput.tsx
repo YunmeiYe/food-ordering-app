@@ -7,9 +7,10 @@ interface PasswordInputProps {
   passwordValue: string;
   setPassword: (password: string) => void;
   disabled: boolean;
+  className?: string;
 }
 
-const PasswordInput = ({ passwordValue, setPassword, disabled }: PasswordInputProps) => {
+const PasswordInput = ({ passwordValue, setPassword, disabled, className }: PasswordInputProps) => {
   const [isVisible, setIsVisible] = useState(false);
   return (
     <Input
@@ -17,23 +18,20 @@ const PasswordInput = ({ passwordValue, setPassword, disabled }: PasswordInputPr
       label="Password"
       placeholder="Enter your password"
       type={isVisible ? "text" : "password"}
-      className="mb-2"
-      size="lg"
+      className={className}
       value={passwordValue}
       onChange={e => setPassword(e.target.value)}
-      disabled={disabled}
+      isDisabled={disabled}
       endContent={
-        <button
-          className="w-6 focus:outline-none disabled:bg-transparent"
-          type="button"
-          disabled={disabled}
+        <div
+          className="w-6 place-self-center cursor-pointer"
           onClick={() => setIsVisible(!isVisible)}>
           {isVisible ? (
             <EyeSlashFilledIcon className="w-full" />
           ) : (
             <EyeFilledIcon className="w-full" />
           )}
-        </button>
+        </div>
       }
     />
   )

@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@nextui-org/react'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
@@ -25,13 +26,12 @@ const Header = () => {
             <div>
               <Link href={'/profile'}>Hello, {userName}</Link>
             </div>
-            <button onClick={() => signOut()} className="bg-primary rounded-full text-white px-8 py-2">Logout</button>
+            <Button onClick={() => signOut()} color='primary' className="font-semibold rounded-full px-8 py-2">Log Out</Button>
           </>
-
         ) : (
           <>
             <Link href={'/login'}>Login</Link>
-            <Link href={'/register'} className="bg-primary rounded-full text-white px-8 py-2">Sign Up</Link>
+            <Button href={'/register'} color='primary' className='font-semibold rounded-full px-8 py-2' as={Link}>Sign Up</Button>
           </>
         )}
       </nav>
