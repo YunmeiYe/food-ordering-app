@@ -127,7 +127,6 @@ const CategoriesPage = () => {
                 </>
               )}
               <ImageUploader
-                imageLink={categoryImage}
                 setImageLink={setCategoryImage}
                 children={<> </>}
               />

@@ -52,7 +52,6 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
             </>
           )}
           <ImageUploader
-            imageLink={image}
             setImageLink={setImage}
             children={<> </>}
           />

@@ -1,7 +1,7 @@
 type Category = {
+  _id: string;
   name: string;
   image: string;
-  _id: string;
 };
 
 export default Category;

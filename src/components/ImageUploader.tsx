@@ -2,13 +2,12 @@ import { ChangeEvent } from "react";
 import toast from "react-hot-toast";
 
 interface ImageUploaderProps {
-  imageLink: string;
   setImageLink: (imageLink: string) => void;
   children: React.ReactNode
 }
 
-const ImageUploader = ({ imageLink, setImageLink, children}: ImageUploaderProps) => {
-
+const ImageUploader = ({ setImageLink, children }: ImageUploaderProps) => {
+  
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
     const files = event.target.files;
     if (files && files.length === 1) {
@@ -39,7 +38,7 @@ const ImageUploader = ({ imageLink, setImageLink, children}: ImageUploaderProps)
   return (
     <label className="cursor-pointer">
       <input type="file" accept="image/*" onChange={handleFileChange} hidden />
-      {imageLink && children}
+      {children}
     </label>
   )
 }

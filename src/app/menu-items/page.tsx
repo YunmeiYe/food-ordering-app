@@ -57,7 +57,7 @@ const MenuItemsPage = () => {
 
   return (
     <section className="my-8">
-      <UserTabs admin={true} />
+      <UserTabs admin={profileData.isAdmin} />
       <div className="block max-w-2xl mx-auto mt-12">
         <div className="flex">
           <h1 className="text-xl grow">Menu Items</h1>

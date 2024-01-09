@@ -47,7 +47,7 @@ const UserTabs = ({ admin }: UserTabsProps) => {
             }
           />
           <Tab
-            key="/users"
+            key={pathname.includes("/users/")? pathname: "/users"}
             href="/users"
             title={
               <div className="flex items-center space-x-2">

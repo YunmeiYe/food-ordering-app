@@ -57,7 +57,7 @@ const NewMenuItemPage = () => {
 
   return (
     <section className="my-8">
-      <UserTabs admin={true} />
+      <UserTabs admin={profileData.isAdmin} />
       <div className="block max-w-2xl mx-auto mt-12">
         <Link href={"/menu-items"} className="bg-primary rounded-xl p-2 text-white inline-flex gap-2 mb-12">
           <LeftArrowIcon className={"w-6"} />

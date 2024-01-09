@@ -31,7 +31,7 @@ const MenuItemsTable = ({ menuItems, onDelete }: MenuItemsTableProps) => {
   }
   
   return (
-    <Table aria-label="Categories Table" classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
+    <Table aria-label="Menu Items Table" classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
       <TableHeader>
         <TableColumn>IMAGE</TableColumn>
         <TableColumn>NAME</TableColumn>
