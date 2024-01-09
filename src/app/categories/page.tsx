@@ -100,8 +100,8 @@ const CategoriesPage = () => {
     <section className="my-8">
       <UserTabs admin={profileData.isAdmin} />
       <div className="block max-w-2xl mx-auto mt-12">
-        <div className="flex">
-          <h1 className="text-xl grow">Categories</h1>
+        <div className="flex px-2">
+          <h1 className="text-2xl font-semibold italic grow text-primary">Categories</h1>
           <Button
             className={`${showAddNewBtn ? "" : "hidden"}`}
             color="primary"
@@ -153,8 +153,10 @@ const CategoriesPage = () => {
             </div>
           </div>
         </form>
+        {error && 
         <div className="text-red-600 mt-3">{error}</div>
-        <div className="mt-8">
+        }
+        <div className="mt-12">
           <CategoriesTable
             onEdit={(category) => { setShowAddNewBtn(false), setSelectedCategory(category), setCategoryImage(category.image), setError('') } }
             onDelete={(category) => { handleDeleteCategory(category) }}

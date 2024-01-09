@@ -23,7 +23,7 @@ const CategoriesTable = ({ onEdit, onDelete, categories }: CategoriesTableProps)
   }
 
   return (
-    <Table aria-label="Categories Table" classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
+    <Table aria-label="Categories Table" isStriped classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
       <TableHeader>
         <TableColumn>IMAGE</TableColumn>
         <TableColumn>NAME</TableColumn>
@@ -34,7 +34,7 @@ const CategoriesTable = ({ onEdit, onDelete, categories }: CategoriesTableProps)
           {categories.map((category) => (
             <TableRow key={category._id}>
               <TableCell>
-                <Avatar src={category.image} showFallback fallback={
+                <Avatar src={category.image} radius="md" className="w-40 h-auto" showFallback fallback={
                   <CameraIcon className="animate-pulse w-6 h-6 text-default-500" />
                 } />
               </TableCell>

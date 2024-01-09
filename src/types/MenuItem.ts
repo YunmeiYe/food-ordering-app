@@ -1,4 +1,4 @@
-import MenuItemProp from "./MenuItemProp";
+import MenuItemAddOn from "./MenuItemAddOn";
 
 type MenuItem = {
   _id?: string;
@@ -7,8 +7,8 @@ type MenuItem = {
   description: string;
   category: string;
   basePrice: string | number;
-  sizes: MenuItemProp[];
-  extraIngredientsPrices: MenuItemProp[];
+  sizes: MenuItemAddOn[];
+  extraIngredientsPrices: MenuItemAddOn[];
 }
 
 export default MenuItem;

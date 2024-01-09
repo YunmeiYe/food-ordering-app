@@ -6,8 +6,8 @@ import { FormEvent, useEffect, useState } from "react"
 import Image from "next/image";
 import Category from "@/types/Category"
 import MenuItem from "@/types/MenuItem"
-import MenuItemProp from "@/types/MenuItemProp"
-import MenuItemAddOns from "./MenuItemAddOns"
+import MenuItemAddOn from "@/types/MenuItemAddOn"
+import MenuItemAddOnsInput from "./MenuItemAddOnsInput"
 import { CameraIcon } from "@/icons/CameraIcon"
 import ModalContainer from "./ModalContainer"
 
@@ -25,14 +25,14 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
   const [category, setCategory] = useState<string>(menuItem?.category || '');
   const [basePrice, setBasePrice] = useState<string>(menuItem?.basePrice.toString() || '');
   const [categories, setCategories] = useState<Category[]>([]);
-  const [sizes, setSizes] = useState<MenuItemProp[]>(menuItem?.sizes || []);
-  const [extraIngredientsPrices, setExtraIngredientsPrices] = useState<MenuItemProp[]>(menuItem?.extraIngredientsPrices || []);
+  const [sizes, setSizes] = useState<MenuItemAddOn[]>(menuItem?.sizes || []);
+  const [extraIngredientsPrices, setExtraIngredientsPrices] = useState<MenuItemAddOn[]>(menuItem?.extraIngredientsPrices || []);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   useEffect(() => {
     fetch("/api/categories")
-    .then((response) => response.json())
-    .then((data) => setCategories(data));
+      .then((response) => response.json())
+      .then((data) => setCategories(data));
   }, [])
 
   return (
@@ -61,14 +61,14 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
         <label> Item Name </label>
         <input type="text" placeholder='Item name' value={name ?? ''} onChange={e => setName(e.target.value)} className="input" />
         <label> Description</label>
-        <input type="text" placeholder="Description" value={description ?? ''} onChange={e => setDescription(e.target.value)} className="input" />
+        <textarea rows={5} placeholder="Description" value={description ?? ''} onChange={e => setDescription(e.target.value)} className="input" />
         <Select label="Select a category" size="sm" classNames={{ trigger: "border border-2 border-gray-300" }} radius="lg" className="my-2"
           value={category ?? ''}
           onChange={e => setCategory(e.target.value)}>
           {categories.map(c =>
             <SelectItem key={c._id} value={c._id}
               startContent={
-                <Avatar src={c.image} alt={c.name} className="w-6 h-6" showFallback
+                <Avatar src={c.image} alt={c.name} radius="md" className="w-10 h-auto" showFallback
                   fallback={<CameraIcon className="animate-pulse w-6 h-6 text-default-500" />}
                 />}
             >
@@ -78,20 +78,20 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
         </Select>
         <label> Base Price</label>
         <input type="number" placeholder='Base Price' value={basePrice ?? ''} onChange={e => setBasePrice(e.target.value)} className="input" />
-        <MenuItemAddOns addOnName={"Sizes"} addLabel={"Add item size"} props={sizes} setProps={setSizes} />
-        <MenuItemAddOns addOnName={"Extra ingredients"} addLabel={"Add ingredients price"} props={extraIngredientsPrices} setProps={setExtraIngredientsPrices} />
+        <MenuItemAddOnsInput addOnName={"Sizes"} addLabel={"Add item size"} props={sizes} setProps={setSizes} />
+        <MenuItemAddOnsInput addOnName={"Extra ingredients"} addLabel={"Add ingredients price"} props={extraIngredientsPrices} setProps={setExtraIngredientsPrices} />
         <Button type='submit' className='mt-2' color="primary" fullWidth >{buttonText}</Button>
-        <Button className='mt-2 bg-transparent border-2 border-gray-700' fullWidth onClick={()=>setShowConfirm(true)}>Delete this item</Button>
+        <Button className='mt-2 bg-transparent border-2 border-gray-700' fullWidth onClick={() => setShowConfirm(true)}>Delete this item</Button>
       </form>
       <ModalContainer
         isOpen={showConfirm}
         title={"Delete this item?"}
         content={"Are you sure you want to delete this item?"}
-        confirmText={"Yes, delete it"} 
+        confirmText={"Yes, delete it"}
         onConfirm={() => { onDelete(), setShowConfirm(false) }}
         closeText="Cancel"
-        onClose={()=>setShowConfirm(false)}
-        />
+        onClose={() => setShowConfirm(false)}
+      />
     </div>
   )
 }

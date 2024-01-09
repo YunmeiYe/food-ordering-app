@@ -59,8 +59,8 @@ const MenuItemsPage = () => {
     <section className="my-8">
       <UserTabs admin={profileData.isAdmin} />
       <div className="block max-w-2xl mx-auto mt-12">
-        <div className="flex">
-          <h1 className="text-xl grow">Menu Items</h1>
+        <div className="flex px-2">
+          <h1 className="text-2xl font-semibold italic grow text-primary">Menu Items</h1>
           <Button href={"/menu-items/new"} as={Link} type="button" color="primary" endContent={<RightArrowIcon className={"w-6"} />}>Create New</Button>
         </div>
         <div className="mt-12">

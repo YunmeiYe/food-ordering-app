@@ -1,8 +1,19 @@
+'use client'
 import Image from "next/image"
-import MenuItem from "./menu/MenuItem"
+import MenuItemCard from "./menu/MenuItemCard"
 import SectionHeaders from "./layout/SectionHeaders"
+import { useEffect, useState } from "react"
+import MenuItem from "@/types/MenuItem"
 
 const HomeMenu = () => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+
+  useEffect(() => {
+    fetch("/api/menu-items")
+    .then(res => res.json())
+    .then(menuItems => setMenuItems(menuItems))
+  }, [])
+  
   return (
     <section>
       <div className="absolute left-0 right-0">
@@ -15,12 +26,9 @@ const HomeMenu = () => {
       </div>
       <SectionHeaders subHeader={"check out"} mainHeader={"Menu"} />
       <div className="grid grid-cols-3 gap-4">
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
-        <MenuItem />
+        {menuItems && menuItems.map(menuItem => (
+          <MenuItemCard key={menuItem._id} menuItem={menuItem}/>
+        ))}
       </div>
     </section>
   )

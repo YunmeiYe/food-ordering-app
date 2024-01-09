@@ -2,18 +2,18 @@ import { ChevronDownIcon } from '@/icons/ChevronDownIcon';
 import { ChevronUpIcon } from '@/icons/ChevronUpIcon';
 import { PlusIcon } from '@/icons/PlusIcon';
 import { TrashIcon } from '@/icons/TrashIcon';
-import MenuItemProp from '@/types/MenuItemProp';
+import MenuItemProp from '@/types/MenuItemAddOn';
 import { Button } from '@nextui-org/react';
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
-interface MenuItemAddOnsProps {
+interface MenuItemAddOnsInputProps {
   addOnName: string;
   addLabel: string;
   props: MenuItemProp[];
   setProps: Dispatch<SetStateAction<MenuItemProp[]>>;
 }
 
-const MenuItemAddOns = ({ addOnName, addLabel, props, setProps }: MenuItemAddOnsProps) => {
+const MenuItemAddOnsInput = ({ addOnName, addLabel, props, setProps }: MenuItemAddOnsInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   function addSize() {
@@ -75,4 +75,4 @@ const MenuItemAddOns = ({ addOnName, addLabel, props, setProps }: MenuItemAddOns
   )
 }
 
-export default MenuItemAddOns
+export default MenuItemAddOnsInput

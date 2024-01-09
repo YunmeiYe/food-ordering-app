@@ -13,7 +13,7 @@ const EditMenuItemPage = () => {
   const { id } = useParams();
   const router = useRouter();
   const { loading: profileLoading, data: profileData } = useProfile()
-  const [menuItem, setMenuItem] = useState<MenuItem|null>(null);
+  const [menuItem, setMenuItem] = useState<MenuItem | null>(null);
 
   useEffect(() => {
     fetch(`/api/menu-items`)
@@ -32,11 +32,11 @@ const EditMenuItemPage = () => {
     return <h1>You are not an admin</h1>
   }
 
-  async function handleFormSubmit(event: FormEvent<HTMLFormElement>,data:any): Promise<void> {
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>, data: any): Promise<void> {
     event.preventDefault();
 
     const creationPromise = new Promise(async (resolve, reject) => {
-      data = {...data, _id:id};
+      data = { ...data, _id: id };
       const response = await fetch("/api/menu-items", {
         method: "PUT",
         body: JSON.stringify(data),
@@ -60,7 +60,7 @@ const EditMenuItemPage = () => {
   }
 
   function handleDeleteMenuItem(): void {
-    const deletionPromise = new Promise(async (resolve, reject) => { 
+    const deletionPromise = new Promise(async (resolve, reject) => {
       const response = await fetch(`/api/menu-items?_id=${id}`, {
         method: "DELETE"
       }).then((response) => response.json());
@@ -88,11 +88,13 @@ const EditMenuItemPage = () => {
           <LeftArrowIcon className={"w-6"} />
           Back to Menu Items
         </Link>
-        <MenuItemForm
-          buttonText={"Save Changes"}
-          menuItem={menuItem}
-          onSubmit={handleFormSubmit}
-          onDelete={()=>handleDeleteMenuItem()} />
+        {menuItem &&
+          <MenuItemForm
+            buttonText={"Save Changes"}
+            menuItem={menuItem}
+            onSubmit={handleFormSubmit}
+            onDelete={() => handleDeleteMenuItem()} />
+        }
       </div>
     </section>
   )

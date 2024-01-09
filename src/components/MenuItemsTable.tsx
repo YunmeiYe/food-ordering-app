@@ -31,7 +31,7 @@ const MenuItemsTable = ({ menuItems, onDelete }: MenuItemsTableProps) => {
   }
   
   return (
-    <Table aria-label="Menu Items Table" classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
+    <Table aria-label="Menu Items Table" isStriped classNames={{ th: "text-sm", td: "text-md text-gray-500" }}>
       <TableHeader>
         <TableColumn>IMAGE</TableColumn>
         <TableColumn>NAME</TableColumn>
@@ -45,12 +45,12 @@ const MenuItemsTable = ({ menuItems, onDelete }: MenuItemsTableProps) => {
           {menuItems.map((menuItem) => (
             <TableRow key={menuItem._id}>
               <TableCell>
-                <Avatar src={menuItem.image} showFallback fallback={
+                <Avatar src={menuItem.image} radius="md" className="w-20 h-auto" showFallback fallback={
                   <CameraIcon className="animate-pulse w-6 h-6 text-default-500" />
                 } />
               </TableCell>
               <TableCell>{menuItem.name}</TableCell>
-              <TableCell>{menuItem.description}</TableCell>
+              <TableCell><p className="line-clamp-3">{menuItem.description}</p></TableCell>
               <TableCell>{categories.find(c => c._id === menuItem.category)?.name}</TableCell>
               <TableCell>{menuItem.basePrice}</TableCell>
               <TableCell>
