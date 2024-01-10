@@ -39,5 +39,9 @@ button[type="submit"]:disabled {
   @apply bg-red-400 border-0 cursor-not-allowed
 }
 
+.flying-button-parent button{
+  @apply flex w-full justify-center gap-2 px-6 py-2
+  border-primary bg-primary text-white text-medium rounded-full hover:opacity-70 transition-opacity whitespace-nowrap
+}
 
 

@@ -1,8 +1,5 @@
+import UserProfile from "@/types/UserProfile";
 import { useEffect, useState } from "react";
-
-interface UserProfile {
-  isAdmin: boolean;
-}
 
 export const useProfile = () => {
   const [data, setData] = useState<UserProfile | null>(null);

@@ -2,26 +2,26 @@
 import ProfileForm from '@/components/ProfileForm'
 import UserTabs from '@/components/UserTabs'
 import { useProfile } from '@/components/hooks/useProfile'
-import User from '@/types/User'
+import UserProfile from '@/types/UserProfile'
 import { useParams } from 'next/navigation'
 import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 const EditUserPage = () => {
   const { loading: profileLoading, data: profileData } = useProfile()
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const { id } = useParams()
-  
-  function fetchUser() { 
+
+  function fetchUser() {
     fetch(`/api/users`)
-    .then(res => res.json())
-    .then(users => setUser(users.find((u:User) => u._id === id)))
+      .then(res => res.json())
+      .then(users => setUser(users.find((u: UserProfile) => u._id === id)))
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchUser()
   }, [])
-  
+
   if (profileLoading) {
     return 'Loading user info...'
   }
@@ -29,8 +29,8 @@ const EditUserPage = () => {
   if (!profileData?.isAdmin) {
     return <h1>You are not an admin</h1>
   }
-  
-  async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: User) {
+
+  async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: UserProfile) {
     event.preventDefault();
 
     const savingPromise = new Promise(async (resolve, reject) => {
@@ -60,7 +60,7 @@ const EditUserPage = () => {
     <section className="my-8">
       <UserTabs admin={profileData.isAdmin} />
       <div className="block max-w-2xl mx-auto mt-12">
-        {user && 
+        {user &&
           <ProfileForm user={user} onSave={(event, data) => handleProfileUpdate(event, data)} />
         }
       </div>

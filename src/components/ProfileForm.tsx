@@ -1,13 +1,14 @@
-import React, { FormEvent,useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import ImageUploader from './ImageUploader'
 import { Avatar, Button, Checkbox } from '@nextui-org/react'
 import { PencilIcon } from '@/icons/PencilIcon'
-import User from '@/types/User'
+import UserProfile from '@/types/UserProfile'
 import { useProfile } from './hooks/useProfile'
+import AddressInputs from './AddressInputs'
 
 interface ProfileFormProps {
-  user: User | null,
-  onSave: (event: FormEvent<HTMLFormElement>, data: User) => void
+  user: UserProfile | null,
+  onSave: (event: FormEvent<HTMLFormElement>, data: UserProfile) => void
 }
 
 const ProfileForm = ({ user, onSave }: ProfileFormProps) => {
@@ -20,7 +21,16 @@ const ProfileForm = ({ user, onSave }: ProfileFormProps) => {
   const [postalCode, setPostalCode] = useState(user?.postalCode || '');
   const [country, setCountry] = useState(user?.country || '');
   const [isAdmin, setIsAdmin] = useState(user?.isAdmin || false);
-  const { data: loggedInUserData} = useProfile();
+  const { data: loggedInUserData } = useProfile();
+
+  function handleAddressChange(propName: string, value: string): void {
+    if (propName === 'phone') setPhone(value);
+    if (propName === 'streetAddress') setStreetAddress(value);
+    if (propName === 'city') setCity(value);
+    if (propName === 'state') setState(value);
+    if (propName === 'country') setCountry(value);
+    if (propName === 'postalCode') setPostalCode(value);
+  }
 
   return (
     <div className='grid grid-cols-6 gap-4'>
@@ -41,39 +51,18 @@ const ProfileForm = ({ user, onSave }: ProfileFormProps) => {
           }
         />
       </div>
-      <form className='col-span-4' onSubmit={(e) => onSave(e, {name: userName, image: userImage, phone, streetAddress, postalCode, city, state, country, isAdmin })}>
+      <form className='col-span-4' onSubmit={(e) => onSave(e, { name: userName, image: userImage, phone, streetAddress, postalCode, city, state, country, isAdmin })}>
         <label> Full name</label>
         <input type="text" placeholder='Full name' value={userName ?? ''} onChange={e => setUserName(e.target.value)} className='input' />
         <label> Email</label>
         <input type="email" placeholder="Email" value={user?.email ?? ''} disabled className='input' />
-        <label> Phone number</label>
-        <input type="tel" placeholder='Phone number' value={phone ?? ''} onChange={e => setPhone(e.target.value)} className='input' />
-        <label> Street address</label>
-        <input type="text" placeholder='Street address' value={streetAddress ?? ''} onChange={e => setStreetAddress(e.target.value)} className='input' />
-        <div className='grid grid-cols-2 gap-2'>
-          <div>
-            <label> City</label>
-            <input type="text" placeholder='City' value={city ?? ''} onChange={e => setCity(e.target.value)} className='input' />
-          </div>
-          <div>
-            <label> State</label>
-            <input type="text" placeholder='State' value={state ?? ''} onChange={e => setState(e.target.value)} className='input' />
-          </div>
-        </div>
-        <div className='grid grid-cols-2 gap-2'>
-          <div>
-            <label> Country</label>
-            <input type="text" placeholder='Country' value={country ?? ''} onChange={e => setCountry(e.target.value)} className='input' />
-          </div>
-          <div>
-            <label> Postal code</label>
-            <input type="text" placeholder='Postal code' value={postalCode ?? ''} onChange={e => setPostalCode(e.target.value)} className='input' />
-          </div>
-        </div>
+        <AddressInputs
+          addressProps={{ phone, streetAddress, city, state, country, postalCode }}
+          setAddressProps={(propName: string, value: string) => handleAddressChange(propName, value)} />
         {loggedInUserData?.isAdmin && (
-        <div className='my-2'>
-        <Checkbox checked={isAdmin} defaultSelected={isAdmin} value={'1'} onChange={(e)=>setIsAdmin(e.target.checked)}>Admin</Checkbox>
-        </div>
+          <div className='my-2'>
+            <Checkbox checked={isAdmin} defaultSelected={isAdmin} value={'1'} onChange={(e) => setIsAdmin(e.target.checked)}>Admin</Checkbox>
+          </div>
         )}
         <Button type='submit' className='mt-2' fullWidth >Save All Changes</Button>
       </form>

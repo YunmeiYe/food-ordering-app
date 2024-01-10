@@ -1,7 +1,7 @@
 'use client'
 import ProfileForm from '@/components/ProfileForm';
 import UserTabs from '@/components/UserTabs';
-import User from '@/types/User';
+import UserProfile from '@/types/UserProfile';
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react'
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [profileFetched, setProfileFetched] = useState(false);
 
@@ -31,7 +31,7 @@ const ProfilePage = () => {
     redirect('/login');
   }
 
-  async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: User) {
+  async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: UserProfile) {
     event.preventDefault();
 
     const savingPromise = new Promise(async (resolve, reject) => {

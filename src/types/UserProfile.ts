@@ -1,4 +1,4 @@
-type User = {
+type UserProfile = {
   _id?: string;
   name: string;
   email?: string;
@@ -12,4 +12,4 @@ type User = {
   isAdmin: boolean;
 };
 
-export default User;
+export default UserProfile;

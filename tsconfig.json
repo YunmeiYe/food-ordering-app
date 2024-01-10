@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/models/User.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/models/User.ts", "src/components/AddToCartButton.jsx", "src/components/menu/MenuItemPopUp.tsx"],
   "exclude": ["node_modules"]
 }

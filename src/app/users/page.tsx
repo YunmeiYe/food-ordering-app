@@ -2,18 +2,18 @@
 import UserTabs from '@/components/UserTabs'
 import UsersTable from '@/components/UsersTable'
 import { useProfile } from '@/components/hooks/useProfile'
-import User from '@/types/User'
+import UserProfile from '@/types/UserProfile'
 import React, { useEffect, useState } from 'react'
 
 const UsersPage = () => {
   const { loading: profileLoading, data: profileData } = useProfile()
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserProfile[]>([]);
 
   useEffect(() => {
     fetch("/api/users")
       .then(response => response.json())
       .then(data => setUsers(data));
-  },[])
+  }, [])
 
   if (profileLoading) {
     return 'Loading user info...'
