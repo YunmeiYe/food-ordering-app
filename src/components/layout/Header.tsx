@@ -29,7 +29,7 @@ const Header = () => {
             <div>
               <Link href={'/profile'}>Hello, {userName}</Link>
             </div>
-            <Button onClick={() => signOut()} color='primary' className="font-semibold rounded-full px-8 py-2">Log Out</Button>
+            <Button onClick={() => signOut({callbackUrl: '/'})} color='primary' className="font-semibold rounded-full px-8 py-2">Log Out</Button>
             <Button as={Link} href='/cart' className='bg-transparent relative' startContent={<CartIcon className={'w-8'} />}>
               {cartProducts.length > 0 && 
                 <span className='w-5 h-5 rounded-full bg-primary text-white text-sm text-center absolute right-3 top-0'>{cartProducts.length}</span>

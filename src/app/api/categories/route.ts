@@ -1,13 +1,17 @@
 import { Category } from "@/app/models/Category";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
     mongoose.connect(process.env.MONGODB_URI!);
-    const createdCategory = await Category.create(body);
-    return NextResponse.json(createdCategory);
+    if (await isAdmin()) {
+      const body = await req.json();
+      const createdCategory = await Category.create(body);
+      return NextResponse.json(createdCategory);
+    }
+    return NextResponse.json({});
   } catch (err: any) {
     if (err.name === "ValidationError") {
       return NextResponse.json({
@@ -27,9 +31,12 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   try {
     mongoose.connect(process.env.MONGODB_URI!);
-    const { _id, name, image } = await req.json();
-    const updateResult = await Category.updateOne({ _id }, { name, image });
-    return NextResponse.json(updateResult);
+    if (await isAdmin()) {
+      const { _id, name, image } = await req.json();
+      const updatedCategory = await Category.findByIdAndUpdate({ _id }, { name, image }, { new: true });
+      return NextResponse.json(updatedCategory);
+    }
+    return NextResponse.json({});
   } catch (err: any) {
     if (err.name === "MongoServerError" && err.code === 11000) {
       return NextResponse.json({
@@ -54,13 +61,16 @@ export async function GET() {
   }
 }
 
-export async function DELETE(req: NextRequest) { 
+export async function DELETE(req: NextRequest) {
   try {
     mongoose.connect(process.env.MONGODB_URI!);
-    const url = new URL(req.url);
-    const _id = url.searchParams.get('_id');
-    const deleteResult = await Category.deleteOne({ _id });
-    return NextResponse.json(deleteResult);
+    if (await isAdmin()) {
+      const url = new URL(req.url);
+      const _id = url.searchParams.get('_id');
+      const deleteResult = await Category.deleteOne({ _id });
+      return NextResponse.json(deleteResult);
+    }
+    return NextResponse.json(true);
   } catch (err) {
     return NextResponse.json(err);
   }
