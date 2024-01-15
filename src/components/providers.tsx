@@ -18,14 +18,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const CartContext = createContext<CartContext>({} as CartContext);
 
-export function calCartProductPrice(product: CartProduct) { 
-  let price = product.menuItem.basePrice;
+export function calCartProductPrice(product: CartProduct):number { 
+  let price = product.menuItem.basePrice as number;
   if (product.selectedSize) {
-    price += product.selectedSize.price;
+    price += product.selectedSize.price as number;
   }
   if (product.selectedExtras.length > 0) {
     for (const extra of product.selectedExtras) {
-      price += extra.price;
+      price += extra.price as number;
     }
   }
   return price;
@@ -43,7 +43,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
   function addToCart(menuItem: MenuItem, selectedSize: MenuItemAddOn | null, selectedExtras: MenuItemAddOn[]) {
     setCartProducts(prevProducts => {
-      const newProducts = [...prevProducts, { menuItem, selectedSize, selectedExtras }];
+      const newProducts = [...prevProducts, { menuItem, selectedSize, selectedExtras}];
       saveCartProductsToLocalStorage(newProducts);
       return newProducts;
     });
@@ -63,7 +63,6 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     })
     toast.success('Product removed from cart');
   }
-
 
   function saveCartProductsToLocalStorage(cartProducts: CartProduct[]) {
     if (ls) {

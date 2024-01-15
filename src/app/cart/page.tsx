@@ -1,11 +1,11 @@
 'use client'
 import AddressInputs from '@/components/AddressInputs'
+import CartProduct from '@/components/CartProduct'
+import OrderSummary from '@/components/OrderSummary'
 import { useProfile } from '@/components/hooks/useProfile'
 import { CartContext, calCartProductPrice } from '@/components/providers'
-import { CartIcon } from '@/icons/CartIcon'
-import { CreditCardIcon } from '@/icons/CreditCardIcon'
-import { TrashIcon } from '@/icons/TrashIcon'
-import { Button, Image, Tooltip } from '@nextui-org/react'
+import { ChevronLeftIcon } from '@/icons/ChevronLeftIcon'
+import { Button, Link } from '@nextui-org/react'
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -63,85 +63,54 @@ const CartPage = () => {
     });
   }
 
+  if (cartProducts.length === 0) {
+    return (
+      <section className='max-w-2xl mx-auto my-16'>
+        <div className='my-4 flex flex-col gap-4 items-center'>
+          <p className='text-3xl font-semibold'>Your Shopping Cart is Empty</p>
+          <Link href={'/menu'} className='text-primary font-semibold'>
+            <span>Continue shopping</span>
+          </Link>
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section className='my-8'>
-      <div className='grid grid-cols-2 mt-16 gap-12'>
-        <div>
-          <div className='border-b-1 flex items-center text-lg font-semibold'><CartIcon className={'w-10 stroke-gray-700 mx-4 my-2'} />My Cart</div>
-          {cartProducts.length > 0
-            ? (
-              <div>
-                {cartProducts && cartProducts.map((product, index) => (
-                  <div key={index} className='grid grid-cols-8 items-center gap-4 border-b py-3'>
-                    <div className='col-span-2'>
-                      <Image src={product.menuItem.image} alt={product.menuItem.name} />
-                    </div>
-                    <div className='col-span-4 ml-4'>
-                      <h3 className='font-semibold'>{product.menuItem.name}</h3>
-                      {product.selectedSize && (
-                        <div className='text-sm'>
-                          Size: <span>{product.selectedSize.name}</span>
-                        </div>
-                      )}
-                      {product.selectedExtras.length > 0 && (
-                        <div className='text-sm text-gray-500'>
-                          {product.selectedExtras.map((extra, index) => (
-                            <div key={index}>{extra.name} ${((extra.price) as number).toFixed(2)}</div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <div className='text-lg text-right font-semibold'>
-                      ${(calCartProductPrice(product) as number).toFixed(2)}
-                    </div>
-                    <Tooltip content='Remove'>
-                      <div className='ml-6 cursor-pointer' onClick={() => removeCartProduct(index)}>
-                        <TrashIcon className={'w-6'} />
-                      </div>
-                    </Tooltip>
-                  </div>
-                ))}
-                <div className='grid grid-cols-8 items-center gap-4 border-b py-3'>
-                  <div className='col-span-6 flex flex-col gap-4 pl-4'>
-                    <span className='text-lg font-semibold'>Subtotal:</span>
-                    <span className='text-gray-500'>Delivery fee:</span>
-                  </div>
-                  <div className='col-span-1 flex flex-col gap-4 justify-items-end'>
-                    <span className='font-semibold text-lg text-right'>${subtotal.toFixed(2)}</span>
-                    <span className='text-gray-500 text-right'>$5.00</span>
-                  </div>
-                </div>
-                <div className='grid grid-cols-8 items-center gap-4 py-3'>
-                  <div className='col-span-6 pl-4'>
-                    <span className='font-semibold text-lg'>Total:</span>
-                  </div>
-                  <div className='col-span-2'>
-                    <span className='font-semibold text-xl'>${(subtotal + 5).toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div>No product in your shopping cart</div>
-            )
-          }
-        </div>
-        <div>
-          <div className='flex items-center text-lg font-semibold'>
-            <CreditCardIcon className={'w-10 stroke-gray-700 mx-4 my-2'} />
-            Check Out
+    <section className='my-16'>
+      <Link href={'/menu'} className='text-primary font-semibold'>
+        <ChevronLeftIcon className={'w-4 mr-2'} />
+        <span>Continue shopping</span>
+      </Link>
+      {cartProducts.length > 0 &&
+        <div className='grid grid-cols-5 mt-8 gap-12'>
+          <div className='col-span-3'>
+            <div className='border-b-1 text-2xl font-semibold py-3 mx-4 text-primary'>Cart</div>
+            <div>
+              {cartProducts && cartProducts.map((product, index) => (
+                <CartProduct key={index} product={product}
+                  onRemove={() => removeCartProduct(index)} />
+              ))}
+            </div>
+            <OrderSummary subtotal={subtotal} deviveryFee={5} discount={0} paid={false} />
           </div>
-          <div className='bg-gray-100 rounded-xl p-4'>
-            <form className='flex flex-col gap-3 mt-3' onSubmit={proceedToCheckOut}>
-              <div>
-                <AddressInputs
-                  addressProps={address}
-                  setAddressProps={(propName: string, value: string) => handleAddressChange(propName, value)} />
-              </div>
-              <Button type='submit' color='primary' fullWidth>Pay ${(subtotal + 5).toFixed(2)}</Button>
-            </form>
+          <div className='col-span-2'>
+            <div className='text-2xl font-semibold py-3 mx-4 text-primary'>
+              Check Out
+            </div>
+            <div className='rounded-xl p-4 shadow-xl bg-gray-50'>
+              <form className='flex flex-col gap-3 mt-3' onSubmit={proceedToCheckOut}>
+                <div>
+                  <AddressInputs
+                    addressProps={address}
+                    setAddressProps={(propName: string, value: string) => handleAddressChange(propName, value)} disabled={false} />
+                </div>
+                <Button type='submit' color='primary' fullWidth>Pay ${(subtotal + 5).toFixed(2)}</Button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </section>
   )
 }

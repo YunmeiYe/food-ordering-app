@@ -49,7 +49,7 @@ const MenuItemPopUp = ({ menuItem, setShowPopUp, onAdd }: MenuItemPopUpProps) =>
                     checked={selectedSize?.name === size.name}
                     onChange={() => setSelectedSize(size)}
                   />
-                  {size.name} ${menuItem.basePrice + size.price}
+                  {size.name} ${menuItem.basePrice as string + size.price}
                 </label>
               ))}
             </div>

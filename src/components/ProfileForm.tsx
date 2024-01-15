@@ -58,7 +58,7 @@ const ProfileForm = ({ user, onSave }: ProfileFormProps) => {
         <input type="email" placeholder="Email" value={user?.email ?? ''} disabled className='input' />
         <AddressInputs
           addressProps={{ phone, streetAddress, city, state, country, postalCode }}
-          setAddressProps={(propName: string, value: string) => handleAddressChange(propName, value)} />
+          setAddressProps={(propName: string, value: string) => handleAddressChange(propName, value)} disabled={false} />
         {loggedInUserData?.isAdmin && (
           <div className='my-2'>
             <Checkbox checked={isAdmin} defaultSelected={isAdmin} value={'1'} onChange={(e) => setIsAdmin(e.target.checked)}>Admin</Checkbox>

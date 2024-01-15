@@ -11,8 +11,8 @@ const Header = () => {
   const user = session?.user;
   let userName = user?.name || user?.email;
   if (user && userName?.includes(' ')) userName = userName.split(' ')[0];
-  
-  const {cartProducts} = useContext(CartContext)
+
+  const { cartProducts } = useContext(CartContext)
 
   return (
     <header className="flex items-center justify-between">
@@ -31,7 +31,9 @@ const Header = () => {
             </div>
             <Button onClick={() => signOut()} color='primary' className="font-semibold rounded-full px-8 py-2">Log Out</Button>
             <Button as={Link} href='/cart' className='bg-transparent relative' startContent={<CartIcon className={'w-8'} />}>
-              <span className='w-5 h-5 rounded-full bg-primary text-white text-sm text-center absolute right-3 top-0'>{cartProducts.length}</span>
+              {cartProducts.length > 0 && 
+                <span className='w-5 h-5 rounded-full bg-primary text-white text-sm text-center absolute right-3 top-0'>{cartProducts.length}</span>
+              }
             </Button>
           </>
         ) : (

@@ -1,4 +1,3 @@
-import CartProduct from "@/types/CartProduct";
 import mongoose, { models } from "mongoose";
 
 const OrderSchema = new mongoose.Schema({
