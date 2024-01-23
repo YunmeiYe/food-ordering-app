@@ -11,8 +11,9 @@ const HomeMenu = ({ className }: SectionProps) => {
   useEffect(() => {
     fetch("/api/menu-items")
       .then(res => res.json())
-      .then(menuItems => setMenuItems(menuItems))
+      .then(menuItems => setMenuItems(menuItems.slice(0,6)))
   }, [])
+
   return (
     <section className={className}>
       <SectionHeader
