@@ -3,7 +3,6 @@ import MenuItemAddOn from '@/types/MenuItemAddOn'
 import { Button, Image } from '@nextui-org/react'
 import React, { ChangeEvent, useState } from 'react'
 import { calCartProductPrice } from '../../../util/ContextProvider'
-import PopUpAddToCartButton from "../cart/PopUpAddToCartButton";
 
 interface MenuItemPopUpProps {
   menuItem: MenuItem,
@@ -72,7 +71,13 @@ const MenuItemPopUp = ({ menuItem, setShowPopUp, onAdd }: MenuItemPopUpProps) =>
           )}
           <div onClick={() => onAdd(menuItem, selectedSize, selectedExtras)}>
           </div>
-          <PopUpAddToCartButton price={addToCartPrice} image={menuItem.image} onClick={() => onAdd(menuItem, selectedSize, selectedExtras)} />
+          <button
+            className='mt-4 sticky bottom-2 w-full border-2 px-4 py-2 border-primary text-dark bg-primary
+             hover:text-light hover:border-dark rounded-full transition-all whitespace-nowrap'
+             onClick={() => onAdd(menuItem, selectedSize, selectedExtras)}
+          >
+            Add to Cart <span className='font-semibold'>${addToCartPrice}</span>
+          </button>
           <Button color='danger' variant='flat' radius='full' className='my-2' fullWidth onClick={() => setShowPopUp(false)}>Cancel</Button>
         </div>
       </div>

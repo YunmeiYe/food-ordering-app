@@ -38,6 +38,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
       saveCartProductsToLocalStorage(newProducts);
       return newProducts;
     });
+    toast.success('Added to cart');
   }
 
   function clearCart() {

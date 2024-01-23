@@ -1,5 +1,4 @@
 import MenuItem from "@/types/MenuItem";
-import AddToCartButton from "../cart/AddToCartButton";
 import { useContext, useState } from "react";
 import { CartContext } from "../../../util/ContextProvider";
 import MenuItemAddOn from "@/types/MenuItemAddOn";
@@ -47,7 +46,7 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
               ${(menuItem.basePrice as number).toFixed(2)}
             </p>
             {session ? (
-              <AddToCartButton hasSizesOrExtras={hasSizesOrExtras} onClick={handleAddToCartClick} image={menuItem.image} />
+            <button className="border-2 bg-dark hover:bg-primary hover:text-dark rounded-full transition-all whitespace-nowrap px-4 py-2"  onClick={handleAddToCartClick}>Add to cart</button>
             ) : (
               <Button as={Link} href='/login' radius='none' size='sm' className='bg-transparent border hover:bg-primary hover:text-dark'>
                 Order
