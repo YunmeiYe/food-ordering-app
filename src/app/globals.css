@@ -50,7 +50,3 @@ button:disabled {
 button[type="submit"]:disabled {
   @apply bg-primary border-0 cursor-not-allowed
 }
-
-.flying-button-parent button{
-  @apply flex w-full justify-center gap-2 px-4 py-2 
-}

@@ -15,7 +15,7 @@ const ContactSecton = ({ className }: SectionProps) => {
         <div className="container py-20 max-w-4xl">
           <div className="text-center mb-10">
             <h1 className="mb-2">Contact Us</h1>
-            <p className="text-gray-400">We'd love to talk about how we can help you.</p>
+            <p className="text-gray-400">We&apos;d love to talk about how we can help you.</p>
           </div>
           <ContactUsForm />
         </div>

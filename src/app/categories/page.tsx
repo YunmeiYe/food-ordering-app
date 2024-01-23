@@ -138,10 +138,7 @@ const CategoriesPage = () => {
                       Upload Image
                     </>
                   )}
-                  <ImageUploader
-                    setImageLink={setCategoryImage}
-                    children={<> </>}
-                  />
+                  <ImageUploader setImageLink={setCategoryImage} />
                 </label>
               </div>
               <div className="col-span-2 flex flex-col gap-4 py-6">

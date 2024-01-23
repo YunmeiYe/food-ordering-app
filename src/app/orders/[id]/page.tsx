@@ -30,7 +30,7 @@ const OrderPage = () => {
         .then(data => { setOrder(data); })
     }
 
-  }, [])
+  }, [id])
 
   let subtotal = 0;
   if (order?.cartProducts) {

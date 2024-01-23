@@ -50,10 +50,7 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
               Upload Image
             </>
           )}
-          <ImageUploader
-            setImageLink={setImage}
-            children={<> </>}
-          />
+          <ImageUploader setImageLink={setImage}/>
         </label>
       </div>
       <form className='col-span-2' onSubmit={(e) => onSubmit(e, { image, name, description, category, basePrice, sizes, extraIngredientsPrices })}>

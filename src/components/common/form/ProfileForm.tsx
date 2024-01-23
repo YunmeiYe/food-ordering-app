@@ -35,21 +35,18 @@ const ProfileForm = ({ user, onSave }: ProfileFormProps) => {
   return (
     <div className='grid grid-cols-6 gap-4'>
       <div className='col-span-2'>
-        <ImageUploader
-          setImageLink={setUserImage}
-          children={
-            <div className='relative'>
-              {userImage ? (
-                <Avatar src={userImage!} className="w-[160px] h-[160px]" />
-              ) : (
-                <Avatar src='' showFallback className="w-[160px] h-[160px]" />
-              )}
-              <div className='bg-primary text-dark rounded-full p-2 absolute right-11 bottom-6 hover:text-white'>
-                <PencilIcon className={'w-5'} />
-              </div>
+        <ImageUploader setImageLink={setUserImage}>
+          <div className='relative'>
+            {userImage ? (
+              <Avatar src={userImage!} className="w-[160px] h-[160px]" />
+            ) : (
+              <Avatar src='' showFallback className="w-[160px] h-[160px]" />
+            )}
+            <div className='bg-primary text-dark rounded-full p-2 absolute right-11 bottom-6 hover:text-white'>
+              <PencilIcon className={'w-5'} />
             </div>
-          }
-        />
+          </div>
+        </ImageUploader >
       </div>
       <form className='col-span-4' onSubmit={(e) => onSave(e, { name: userName, image: userImage, phone, streetAddress, postalCode, city, state, country, isAdmin })}>
         <label> Full name</label>

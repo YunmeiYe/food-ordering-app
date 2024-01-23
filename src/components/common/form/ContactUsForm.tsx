@@ -91,7 +91,7 @@ const ContactUsForm = () => {
       />
       <div>
         <Button type="submit" radius="sm" size="md" isLoading={submitting}>Send Inquiry</Button>
-        <p className="text-gray-400 mt-3">We'll get back to you in 1-2 business days.</p>
+        <p className="text-gray-400 mt-3">We&apos;ll get back to you in 1-2 business days.</p>
       </div>
     </form>
   )

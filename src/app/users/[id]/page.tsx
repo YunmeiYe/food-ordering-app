@@ -25,7 +25,7 @@ const EditUserPage = () => {
 
   useEffect(() => {
     fetchUser()
-  }, [])
+  }, [id])
 
   if (status === 'unauthenticated') {
     redirect('/login');

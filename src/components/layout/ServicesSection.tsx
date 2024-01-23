@@ -13,7 +13,7 @@ const ServicesSection = ({className}:SectionProps) => {
           <h1 className="font-semibold mb-4">Our Services</h1>
           <p>
             From swift and reliable delivery to a diverse selection of healthy food options and authentic original recipes,
-            we've crafted a seamless experience for your pizza cravings.
+            we&apos;ve crafted a seamless experience for your pizza cravings.
           </p>
         </div>
         <div className='grid grid-cols-3 gap-6'>

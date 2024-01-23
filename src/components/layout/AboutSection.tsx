@@ -17,7 +17,7 @@ const AboutSection = ({className}:SectionProps) => {
               each pizza tells a tale of dedication and quality.
             </p>
             <p>
-              With a commitment to excellence, we've built a community that cherishes every slice.
+              With a commitment to excellence, we&apos;ve built a community that cherishes every slice.
               Join us on this gastronomic adventure, where every order is a chapter in our story—a story of taste,
               tradition, and the joy of sharing exceptional food
             </p>

@@ -38,7 +38,7 @@ const LoginPage = () => {
         <div className="text-danger my-2">{error}</div>
         <Button type="submit" fullWidth isLoading={loginInProgress} isDisabled={loginInProgress} className="font-semibold">Login</Button>
         <div className="text-center mt-4 text-gray-400">
-          Don't have an account? {' '}
+        dont&apos;t have an account? {' '}
           <Link href={"/register"} isDisabled={loginInProgress}>Sign Up</Link>
         </div>
         <div className="my-3 text-center grid grid-cols-3 items-center">

@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 interface ImageUploaderProps {
   setImageLink: (imageLink: string) => void;
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const ImageUploader = ({ setImageLink, children }: ImageUploaderProps) => {
@@ -38,7 +38,7 @@ const ImageUploader = ({ setImageLink, children }: ImageUploaderProps) => {
   return (
     <label className="cursor-pointer">
       <input type="file" accept="image/*" onChange={handleFileChange} hidden />
-      {children}
+      {children && children}
     </label>
   )
 }

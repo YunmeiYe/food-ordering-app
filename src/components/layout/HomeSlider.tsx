@@ -1,4 +1,4 @@
-import { Button, Link } from '@nextui-org/react'
+import { Button, Image, Link } from '@nextui-org/react'
 import SlideBackground from './SlideBackground'
 import { SectionProps } from '@/types/SectionProps'
 
@@ -10,62 +10,53 @@ const HomeSlider = ({ className }: SectionProps) => {
           <div className="hs-carousel-body w-full absolute top-0 bottom-0 start-0 flex flex-nowrap duration-700 ease-in-out delay-200 opacity-0">
 
             {/*First Slide*/}
-            <SlideBackground
-              bgImage={'/assets/slider_bg_1.jpg'}
-              children={
-                <div className="w-full flex flex-col justify-center text-center h-full absolute z-10">
-                  <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Welcome</span>
-                  <h1 className="mb-8 text-[40px]">We cooked your desired <span className='block'>Pizza Recipe</span></h1>
-                  <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the <span className='block'>necessary regelialia.</span></h3>
+            <SlideBackground bgImage={'/assets/slider_bg_1.jpg'}>
+              <div className="w-full flex flex-col justify-center text-center h-full absolute z-10">
+                <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Welcome</span>
+                <h1 className="mb-8 text-[40px]">We cooked your desired <span className='block'>Pizza Recipe</span></h1>
+                <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the <span className='block'>necessary regelialia.</span></h3>
+                <p>
+                  <Button as={Link} href='/menu' color='primary' radius='none' size='lg' className='py-4 px-6 text-dark'>Order Now</Button>
+                  <Button as={Link} href='/menu' radius='none' size='lg' className='bg-transparent border-2 py-4 px-6 ml-2'>View Menu</Button>
+                </p>
+              </div>
+            </SlideBackground>
+
+            {/*Second Slide*/}
+            <SlideBackground bgImage={'/assets/slider_bg_2.jpg'}>
+              <div className="w-full flex flex-row gap-6 justify-center items-center h-full absolute z-10">
+                <div className='w-1/4'>
+                  <Image src="/assets/slider_pizza_1.png" alt=""/>
+                </div>
+                <div className='max-w-xl ml-6'>
+                  <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Crunchy</span>
+                  <h1 className="mb-8 text-[40px]">Italian Pizza</h1>
+                  <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the necessary regelialia.</h3>
                   <p>
                     <Button as={Link} href='/menu' color='primary' radius='none' size='lg' className='py-4 px-6 text-dark'>Order Now</Button>
                     <Button as={Link} href='/menu' radius='none' size='lg' className='bg-transparent border-2 py-4 px-6 ml-2'>View Menu</Button>
                   </p>
                 </div>
-              }
-            />
-
-            {/*Second Slide*/}
-            <SlideBackground
-              bgImage={'/assets/slider_bg_2.jpg'}
-              children={
-                <div className="w-full flex flex-row gap-6 justify-center items-center h-full absolute z-10">
-                  <div className='w-1/4'>
-                    <img src="/assets/slider_pizza_1.png" alt="" />
-                  </div>
-                  <div className='max-w-xl ml-6'>
-                    <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Crunchy</span>
-                    <h1 className="mb-8 text-[40px]">Italian Pizza</h1>
-                    <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the necessary regelialia.</h3>
-                    <p>
-                      <Button as={Link} href='/menu' color='primary' radius='none' size='lg' className='py-4 px-6 text-dark'>Order Now</Button>
-                      <Button as={Link} href='/menu' radius='none' size='lg' className='bg-transparent border-2 py-4 px-6 ml-2'>View Menu</Button>
-                    </p>
-                  </div>
-                </div>
-              }
-            />
+              </div>
+            </SlideBackground>
 
             {/*Third Slide*/}
-            <SlideBackground
-              bgImage={'/assets/slider_bg_2.jpg'}
-              children={
-                <div className="w-full flex flex-row gap-6 justify-center items-center h-full absolute z-10">
-                  <div className='max-w-xl text-end mr-6'>
-                    <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Delicious</span>
-                    <h1 className="mb-8 text-[40px]">Italian Cuizine</h1>
-                    <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the necessary regelialia.</h3>
-                    <p>
-                      <Button as={Link} href='/menu' color='primary' radius='none' size='lg' className='py-4 px-6 text-dark'>Order Now</Button>
-                      <Button as={Link} href='/menu' radius='none' size='lg' className='bg-transparent border-2 py-4 px-6 ml-2'>View Menu</Button>
-                    </p>
-                  </div>
-                  <div className='w-1/4'>
-                    <img src="/assets/slider_pizza_2.png" alt="" />
-                  </div>
+            <SlideBackground bgImage={'/assets/slider_bg_2.jpg'}>
+              <div className="w-full flex flex-row gap-6 justify-center items-center h-full absolute z-10">
+                <div className='max-w-xl text-end mr-6'>
+                  <span className="font-nothingYouCouldDo text-primary text-[40px] mb-4">Delicious</span>
+                  <h1 className="mb-8 text-[40px]">Italian Cuizine</h1>
+                  <h3 className="mb-16">A small river named Duden flows by their place and supplies it with the necessary regelialia.</h3>
+                  <p>
+                    <Button as={Link} href='/menu' color='primary' radius='none' size='lg' className='py-4 px-6 text-dark'>Order Now</Button>
+                    <Button as={Link} href='/menu' radius='none' size='lg' className='bg-transparent border-2 py-4 px-6 ml-2'>View Menu</Button>
+                  </p>
                 </div>
-              }
-            />
+                <div className='w-1/4'>
+                  <Image src="/assets/slider_pizza_2.png" alt=""/>
+                </div>
+              </div>
+            </SlideBackground>
           </div>
         </div>
 

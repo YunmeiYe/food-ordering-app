@@ -30,7 +30,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     if (ls && ls.getItem('cart')) {
       setCartProducts(JSON.parse(ls.getItem('cart')!));
     }
-  }, [])
+  }, [ls])
 
   function addToCart(menuItem: MenuItem, selectedSize: MenuItemAddOn | null, selectedExtras: MenuItemAddOn[]) {
     setCartProducts(prevProducts => {

@@ -25,7 +25,7 @@ const EditMenuItemPage = () => {
         const item = items.find((i: MenuItem) => i._id === id);
         setMenuItem(item)
       });
-  }, [])
+  }, [id])
 
   if (status === 'unauthenticated') {
     router.push('/login')

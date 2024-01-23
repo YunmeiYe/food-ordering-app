@@ -55,7 +55,7 @@ const OrdersTable = ({ orders, isAdmin }: OrdersTableProps) => {
       ) : (
         <TableBody emptyContent={isAdmin
           ? "No orders to display"
-          : <p>You haven't placed any orders. <Link href={"/menu"} className="text-primary">Start shopping</Link></p>
+          : <p>You haven&apos;t placed any orders. <Link href={"/menu"} className="text-primary">Start shopping</Link></p>
         }>
           {[]}
         </TableBody>
