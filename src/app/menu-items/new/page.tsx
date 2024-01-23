@@ -1,13 +1,12 @@
 'use client'
-import UserTabs from "@/components/UserTabs"
+import UserTabs from "@/components/layout/UserTabs"
 import { useProfile } from "@/components/hooks/useProfile"
-import { FormEvent} from "react"
+import { FormEvent } from "react"
 import toast from "react-hot-toast"
-import Link from "next/link"
-import LeftArrowIcon from "@/icons/LeftArrowIcon"
 import { useRouter } from "next/navigation"
-import MenuItemForm from "@/components/MenuItemForm"
+import MenuItemForm from "@/components/features/menuItems/MenuItemForm"
 import MenuItem from "@/types/MenuItem"
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react"
 
 const NewMenuItemPage = () => {
   const router = useRouter();
@@ -21,7 +20,7 @@ const NewMenuItemPage = () => {
     return <h1>You are not an admin</h1>
   }
 
-  async function handleFormSubmit(event: FormEvent<HTMLFormElement>, data:MenuItem): Promise<void> {
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>, data: MenuItem): Promise<void> {
     event.preventDefault();
 
     const creationPromise = new Promise(async (resolve, reject) => {
@@ -56,14 +55,14 @@ const NewMenuItemPage = () => {
   }
 
   return (
-    <section className="my-8">
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
       <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <Link href={"/menu-items"} className="bg-primary rounded-xl p-2 text-white inline-flex gap-2 mb-12">
-          <LeftArrowIcon className={"w-6"} />
-          Back to Menu Items
-        </Link>
-        <MenuItemForm buttonText={"Create"} menuItem={null} onSubmit={handleFormSubmit} onDelete={()=>null} />
+      <Breadcrumbs size='lg' className="mt-12">
+        <BreadcrumbItem href='/menu-items'>Menu Items</BreadcrumbItem>
+        <BreadcrumbItem>Create New </BreadcrumbItem>
+      </Breadcrumbs>
+      <div className="max-w-4xl mx-auto mt-12">
+        <MenuItemForm buttonText={"Create"} menuItem={null} onSubmit={handleFormSubmit} onDelete={() => null} />
       </div>
     </section>
   )

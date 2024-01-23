@@ -10,6 +10,8 @@ type UserProfile = {
   state: string;
   country: string;
   isAdmin: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export default UserProfile;

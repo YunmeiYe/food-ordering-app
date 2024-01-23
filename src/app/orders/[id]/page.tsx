@@ -1,8 +1,8 @@
 'use client'
-import AddressInputs from '@/components/AddressInputs'
-import CartProduct from '@/components/CartProduct'
-import OrderSummary from '@/components/OrderSummary'
-import { CartContext, calCartProductPrice } from '@/components/providers'
+import AddressInputs from '@/components/common/form/AddressInputs'
+import CartProduct from '@/components/features/cart/CartProduct'
+import OrderSummary from '@/components/features/cart/OrderSummary'
+import { CartContext, calCartProductPrice } from '@/util/ContextProvider'
 import { TickIcon } from '@/icons/TickIcon'
 import CartProductInfo from '@/types/CartProduct'
 import Order from '@/types/Order'
@@ -40,13 +40,13 @@ const OrderPage = () => {
   }
 
   return (
-    <section className='my-16'>
-      {showMessage && 
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {showMessage &&
         <div className='text-2xl font-semibold text-primary justify-center italic mb-6 flex gap-2 items-center'>
-          <TickIcon className={'w-16'}/>
+          <TickIcon className={'w-16'} />
           Order Submitted
         </div>
-      } 
+      }
       <Breadcrumbs size='lg'>
         <BreadcrumbItem href='/orders'>Orders</BreadcrumbItem>
         <BreadcrumbItem>ID {id}</BreadcrumbItem>
@@ -55,23 +55,19 @@ const OrderPage = () => {
         {order && (
           <div className='grid grid-cols-5 mt-8 gap-12'>
             <div className='col-span-3'>
-            <div className='border-b-1 text-2xl font-semibold py-3 mx-4 text-primary'>Order Details </div>
+              <h2 className='border-b-1 font-semibold py-3 text-primary'>Order Details </h2>
               {order.cartProducts.map((product: CartProductInfo, index: number) => (
                 <CartProduct key={index} product={product} />
               ))}
               <OrderSummary orderId={order._id} subtotal={subtotal} deviveryFee={5} discount={0} paid={order.paid} />
             </div>
             <div className='col-span-2'>
-              <div className='text-2xl font-semibold py-3 mx-4 text-primary'>
-                Delivery Information
-              </div>
-              <div className='rounded-xl p-4 shadow-xl bg-gray-50'>
+              <h2 className='font-semibold py-3 text-primary'>Delivery Information</h2>
+              <div className='rounded-xl p-4 shadow-xl bg-gray-800'>
                 <div>
                   <AddressInputs
                     addressProps={order}
-                    disabled={true} setAddressProps={function (propName: string, value: string): void {
-                      throw new Error('Function not implemented.')
-                    }} />
+                    disabled={true} setAddressProps={function (propName: string, value: string): void { }} />
                 </div>
               </div>
             </div>

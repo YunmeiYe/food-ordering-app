@@ -1,7 +1,7 @@
 'use client'
-import CategoriesTable from "@/components/CategoriesTable";
-import ImageUploader from "@/components/ImageUploader";
-import UserTabs from "@/components/UserTabs"
+import CategoriesTable from "@/components/features/categories/CategoriesTable";
+import ImageUploader from "@/components/common/ImageUploader";
+import UserTabs from "@/components/layout/UserTabs"
 import { useProfile } from "@/components/hooks/useProfile";
 import { PlusIcon } from "@/icons/PlusIcon";
 import { UploadIcon } from "@/icons/UploadIcon";
@@ -77,7 +77,7 @@ const CategoriesPage = () => {
   }
 
   async function handleDeleteCategory(category: Category) {
-    const deletionPromise = new Promise(async (resolve, reject) => { 
+    const deletionPromise = new Promise(async (resolve, reject) => {
       const response = await fetch(`/api/categories?_id=${category._id}`, {
         method: "DELETE"
       }).then((response) => response.json());
@@ -97,73 +97,78 @@ const CategoriesPage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <div className="flex px-2">
-          <h1 className="text-2xl font-semibold italic grow text-primary">Categories</h1>
-          <Button
-            className={`${showAddNewBtn ? "" : "hidden"}`}
-            color="primary"
-            disabled={submitting}
-            endContent={<PlusIcon className={"w-6"} />}
-            onClick={() => setShowAddNewBtn(!showAddNewBtn)}>
-            Add New
-          </Button>
-        </div>
-        <form className={`mt-12 ${showAddNewBtn ? "hidden" : "grid grid-cols-12 gap-6"}`} onSubmit={handleFormSubmit}>
-          <div className={`col-span-3 relative ${categoryImage ? "" : "bg-blue-100 border-dashed border-3 border-blue-500 rounded-lg flex flex-col text-center justify-center"} `}>
-            <label className="cursor-pointer h-full flex flex-col justify-center">
-              {categoryImage ? (
-                <Tooltip content={"Click to upload image"} placement="bottom">
-                  <span className="h-full relative">
-                    <Image src={categoryImage} alt={categoryImage} className="rounded-xl" fill />
-                  </span>
-                </Tooltip>
-              ) : (
-                <>
-                  <UploadIcon className={"w-14 fill-blue-500 place-self-center"} />
-                  Upload Image
-                </>
-              )}
-              <ImageUploader
-                setImageLink={setCategoryImage}
-                children={<> </>}
-              />
-            </label>
-          </div>
-          <div className="col-span-9">
-            <Input
-              isRequired
-              type="text"
-              label={selectedCategory ? `Selected Category: ${selectedCategory.name}` : "New category"}
-              labelPlacement="outside"
-              placeholder={selectedCategory ? "Update category name" : "Enter new category name"}
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-              isDisabled={submitting}
-            />
-            <div className="flex gap-2 mt-4">
-              <Button type="submit" color="primary" fullWidth disabled={submitting}>
-                {selectedCategory ? "Save Changes" : "Add Category"}
-              </Button>
-              <Button className="px-12 bg-transparent border-2 border-gray-700" disabled={submitting} onClick={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
-                Cancel
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData.isAdmin &&
+        <>
+          <UserTabs admin={profileData.isAdmin} />
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="flex px-2">
+              <h1 className="text-2xl font-semibold italic grow text-primary">Categories</h1>
+              <Button
+                className={`text-dark hover:text-white ${showAddNewBtn ? "" : "hidden"}`}
+                color="primary"
+                disabled={submitting}
+                endContent={<PlusIcon className={"w-6"} />}
+                onClick={() => setShowAddNewBtn(!showAddNewBtn)}>
+                Add New
               </Button>
             </div>
+            <form className={`mt-12 ${showAddNewBtn ? "hidden" : "grid grid-cols-3 gap-6"}`} onSubmit={handleFormSubmit}>
+              <div className={`relative ${categoryImage ? "" : "bg-blue-100 border-dashed border-3 border-blue-500 rounded-lg flex flex-col text-center justify-center"} `}>
+                <label className="cursor-pointer h-full flex flex-col justify-center">
+                  {categoryImage ? (
+                    <Tooltip content={"Click to upload image"} placement="bottom">
+                      <span className="h-full relative">
+                        <Image src={categoryImage} alt={categoryImage} className="rounded-xl" fill />
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    <>
+                      <UploadIcon className={"w-14 fill-blue-500 place-self-center"} />
+                      Upload Image
+                    </>
+                  )}
+                  <ImageUploader
+                    setImageLink={setCategoryImage}
+                    children={<> </>}
+                  />
+                </label>
+              </div>
+              <div className="col-span-2 flex flex-col gap-4 py-6">
+                <Input
+                  isRequired
+                  type="text"
+                  label={selectedCategory ? `Selected Category: ${selectedCategory.name}` : "New category"}
+                  labelPlacement="outside"
+                  placeholder={selectedCategory ? "Update category name" : "Enter new category name"}
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)}
+                  isDisabled={submitting}
+                />
+                {error &&
+                  <div className="text-danger mt-3">{error}</div>
+                }
+                <div className="flex gap-2 mt-4">
+                  <Button type="submit" color="primary" fullWidth className="font-semibold hover:text-white" disabled={submitting}>
+                    {selectedCategory ? "Save Changes" : "Add Category"}
+                  </Button>
+                  <Button color="danger" variant='flat' fullWidth className="border border-danger hover:text-white" disabled={submitting} onClick={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </form>
+            <div className="mt-12">
+              <CategoriesTable
+                onEdit={(category) => { setShowAddNewBtn(false), setSelectedCategory(category), setCategoryImage(category.image), setError('') }}
+                onDelete={(category) => { handleDeleteCategory(category) }}
+                categories={categories}
+              />
+            </div>
           </div>
-        </form>
-        {error && 
-        <div className="text-red-600 mt-3">{error}</div>
-        }
-        <div className="mt-12">
-          <CategoriesTable
-            onEdit={(category) => { setShowAddNewBtn(false), setSelectedCategory(category), setCategoryImage(category.image), setError('') } }
-            onDelete={(category) => { handleDeleteCategory(category) }}
-            categories={categories}
-          />
-        </div>
-      </div>
+        </>
+      }
+
     </section>
   )
 }

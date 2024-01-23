@@ -1,8 +1,9 @@
 'use client'
-import ProfileForm from '@/components/ProfileForm'
-import UserTabs from '@/components/UserTabs'
+import ProfileForm from '@/components/common/form/ProfileForm'
+import UserTabs from '@/components/layout/UserTabs'
 import { useProfile } from '@/components/hooks/useProfile'
 import UserProfile from '@/types/UserProfile'
+import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
 import { useParams } from 'next/navigation'
 import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -57,13 +58,20 @@ const EditUserPage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        {user &&
-          <ProfileForm user={user} onSave={(event, data) => handleProfileUpdate(event, data)} />
-        }
-      </div>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData.isAdmin &&
+        <>
+          <UserTabs admin={profileData.isAdmin} />
+          <Breadcrumbs size='lg' className="mt-12">
+            <BreadcrumbItem href='/users'>Users</BreadcrumbItem>
+            <BreadcrumbItem>Edit </BreadcrumbItem>
+          </Breadcrumbs>
+          <div className="max-w-2xl mx-auto mt-12">
+            {user &&
+              <ProfileForm user={user} onSave={(event, data) => handleProfileUpdate(event, data)} />
+            }
+          </div>
+        </>}
     </section>
   )
 }

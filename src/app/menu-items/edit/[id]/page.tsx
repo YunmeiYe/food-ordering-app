@@ -1,13 +1,12 @@
 'use client'
-import UserTabs from "@/components/UserTabs"
+import UserTabs from "@/components/layout/UserTabs"
 import { useProfile } from "@/components/hooks/useProfile"
 import { FormEvent, useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import Link from "next/link"
-import LeftArrowIcon from "@/icons/LeftArrowIcon"
 import { useParams, useRouter } from "next/navigation"
-import MenuItemForm from "@/components/MenuItemForm"
+import MenuItemForm from "@/components/features/menuItems/MenuItemForm"
 import MenuItem from "@/types/MenuItem"
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react"
 
 const EditMenuItemPage = () => {
   const { id } = useParams();
@@ -81,21 +80,24 @@ const EditMenuItemPage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <Link href={"/menu-items"} className="bg-primary rounded-xl p-2 text-white inline-flex gap-2 mb-12">
-          <LeftArrowIcon className={"w-6"} />
-          Back to Menu Items
-        </Link>
-        {menuItem &&
-          <MenuItemForm
-            buttonText={"Save Changes"}
-            menuItem={menuItem}
-            onSubmit={handleFormSubmit}
-            onDelete={() => handleDeleteMenuItem()} />
-        }
-      </div>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData.isAdmin &&
+        <>
+          <UserTabs admin={profileData.isAdmin} />
+          <Breadcrumbs size='lg' className="mt-12">
+            <BreadcrumbItem href='/menu-items'>Menu Items</BreadcrumbItem>
+            <BreadcrumbItem>Edit </BreadcrumbItem>
+          </Breadcrumbs>
+          <div className="max-w-4xl mx-auto mt-12">
+            {menuItem &&
+              <MenuItemForm
+                buttonText={"Save Changes"}
+                menuItem={menuItem}
+                onSubmit={handleFormSubmit}
+                onDelete={() => handleDeleteMenuItem()} />
+            }
+          </div>
+        </>}
     </section>
   )
 }

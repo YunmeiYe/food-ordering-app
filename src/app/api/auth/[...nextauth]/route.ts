@@ -57,7 +57,7 @@ export const authOptions = {
       return token
     },
     async session({ session, token }: any) {
-      session.user = { name: token.name, email: token.email, image: token.picture}
+      session.user = { name: token.name, email: token.email, image: token.picture };
       return session;
     },
     async signIn({ user, account }: any) {

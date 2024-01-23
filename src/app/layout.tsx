@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { AppContextProvider, CartContext, UIProvider } from "../components/providers";
+import { AppContextProvider } from "../util/ContextProvider";
 import { Toaster } from 'react-hot-toast'
-
-const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
+import PrelineScript from '@/util/PrelineScript';
+import { UIProvider } from '@/util/UIProvider';
 
 export const metadata: Metadata = {
   title: 'Pizza Fiesta: Order Delicious Pizzas Online',
@@ -19,10 +18,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='scroll-smooth'>
-      <body className={roboto.className}>
+    <html lang="en" className='scroll-smooth dark'>
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,500,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet" />
+      </head>
+      <body className="font-poppins bg-[url('/assets/bg_dark.jpg')] bg-no-repeat bg-fixed">
         <UIProvider>
-          <main className='max-w-6xl mx-auto p-4 pb-0'>
+          <main>
             <AppContextProvider>
               <Toaster />
               <Header />
@@ -32,6 +35,7 @@ export default function RootLayout({
           </main>
         </UIProvider>
       </body>
+      <PrelineScript />
     </html>
   )
 }

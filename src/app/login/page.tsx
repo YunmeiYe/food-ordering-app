@@ -4,8 +4,8 @@ import { Button, Divider, Link } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import EmailInput from "@/components/EmailInput";
-import PasswordInput from "@/components/PasswordInput";
+import EmailInput from "@/components/common/form/EmailInput";
+import PasswordInput from "@/components/common/form/PasswordInput";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -28,20 +28,20 @@ const LoginPage = () => {
   }
 
   return (
-    <section className="my-8">
+    <section className="pt-12 pb-20">
       <h1 className="text-center text-primary text-4xl my-4">
         Login
       </h1>
-      <form className="block max-w-lg mx-auto mt-12" onSubmit={handleFormSubmit}>
-        <EmailInput emailValue={email} setEmail={setEmail} disabled={loginInProgress} className={"mb-4"} />
-        <PasswordInput passwordValue={password} setPassword={setPassword} disabled={loginInProgress}/>
-        <div className="text-red-600 my-2">{error}</div>
-        <Button type="submit" fullWidth isLoading={loginInProgress} isDisabled={loginInProgress} className="font-semibold mt-6">Login</Button>
-        <div className="text-center mt-4 text-gray-500">
+      <form className="flex flex-col gap-2 max-w-lg mx-auto mt-12" onSubmit={handleFormSubmit}>
+        <EmailInput emailValue={email} setEmail={setEmail} disabled={loginInProgress} className="mb-4" />
+        <PasswordInput passwordValue={password} setPassword={setPassword} disabled={loginInProgress} />
+        <div className="text-danger my-2">{error}</div>
+        <Button type="submit" fullWidth isLoading={loginInProgress} isDisabled={loginInProgress} className="font-semibold">Login</Button>
+        <div className="text-center mt-4 text-gray-400">
           Don't have an account? {' '}
           <Link href={"/register"} isDisabled={loginInProgress}>Sign Up</Link>
         </div>
-        <div className="my-3 text-center text-gray-500 grid grid-cols-3 items-center">
+        <div className="my-3 text-center grid grid-cols-3 items-center">
           <Divider />
           OR
           <Divider />
@@ -50,7 +50,7 @@ const LoginPage = () => {
           fullWidth
           disabled={loginInProgress}
           onClick={() => signIn('google', { callbackUrl: '/' })}
-          className="font-semibold text-gray-700 bg-white border border-gray-300"
+          className="font-semibold text-dark bg-white border border-dark"
           startContent={<GoogleIcon className={"w-6"} />}>
           Login with Google
         </Button>

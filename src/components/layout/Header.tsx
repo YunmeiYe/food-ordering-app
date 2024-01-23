@@ -1,49 +1,89 @@
 'use client'
 import { CartIcon } from '@/icons/CartIcon'
-import { Button } from '@nextui-org/react'
+import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import React, { useContext } from 'react'
-import { CartContext } from '../providers'
+import React, { useContext} from 'react'
+import { ChevronDownIcon } from '@/icons/ChevronDownIcon'
+import { UserIcon } from '@/icons/UserIcon'
+import { TagIcon } from '@/icons/TagIcon'
+import { UsersIcon } from '@/icons/UsersIcon'
+import { ShoppingBagIcon } from '@/icons/ShoppingBagIcon'
+import { MenuIcon } from '@/icons/MenuIcon'
+import { SignOutIcon } from '@/icons/SignOutIcon'
+import { usePathname } from 'next/navigation'
+import { CartContext } from '../../util/ContextProvider'
+import { useProfile } from '../hooks/useProfile'
 
 const Header = () => {
-  const { data: session, status } = useSession();
-  const user = session?.user;
-  let userName = user?.name || user?.email;
-  if (user && userName?.includes(' ')) userName = userName.split(' ')[0];
-
-  const { cartProducts } = useContext(CartContext)
+  const { data: session } = useSession();
+  const { cartProducts } = useContext(CartContext);
+  const pathname = usePathname();
+  const { data: profileData } = useProfile();
 
   return (
-    <header className="flex items-center justify-between">
-      <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-        <Link className="text-primary font-semibold uppercase text-2xl" href={'/'}>Pizza Fiesta</Link>
-        <Link href={'/'}>Home</Link>
-        <Link href={'/menu'}>Menu</Link>
-        <Link href={'/#about'}>About</Link>
-        <Link href={'/#contact'}>Contact</Link>
-      </nav>
-      <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-        {status === "authenticated" ? (
-          <>
-            <div>
-              <Link href={'/profile'}>Hello, {userName}</Link>
-            </div>
-            <Button onClick={() => signOut({callbackUrl: '/'})} color='primary' className="font-semibold rounded-full px-8 py-2">Log Out</Button>
-            <Button as={Link} href='/cart' className='bg-transparent relative' startContent={<CartIcon className={'w-8'} />}>
-              {cartProducts.length > 0 && 
-                <span className='w-5 h-5 rounded-full bg-primary text-white text-sm text-center absolute right-3 top-0'>{cartProducts.length}</span>
+    <Navbar className='font-semibold bg-dark py-3' classNames={{ item: 'data-[active=true]:text-primary' }}>
+      <NavbarBrand>
+        <Link href="/" className='text-primary text-2xl font-josefin'>Pizza Fiesta</Link>
+      </NavbarBrand>
+      <NavbarContent className="gap-8" justify="center">
+        <NavbarItem isActive={pathname === '/'}>
+          <Link href="/" aria-current="page" className='hover:text-primary'>Home</Link>
+        </NavbarItem>
+        <NavbarItem isActive={pathname === '/menu'}>
+          <Link href="/menu" className='hover:text-primary'>Menu</Link>
+        </NavbarItem>
+        <NavbarItem isActive={pathname === '/services'}>
+          <Link href="/services" className='hover:text-primary'>Services</Link>
+        </NavbarItem>
+        <NavbarItem isActive={pathname === '/about'}>
+          <Link href="/about" className='hover:text-primary'>About</Link>
+        </NavbarItem>
+        <NavbarItem isActive={pathname === '/contact'}>
+          <Link href="/contact" className='hover:text-primary'>Contact</Link>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        {profileData ? (
+          <div className='flex items-center h-full'>
+            <Dropdown className='text-gray-300'>
+              <DropdownTrigger>
+                <Button
+                  className='bg-transparent h-full'
+                  startContent={<Avatar src={profileData?.image ? profileData.image : ''} isBordered color='primary' size='sm' />}
+                  endContent={<ChevronDownIcon className={'w-4 stroke-white'} />}
+                  disableAnimation
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Link Actions" color='primary' variant='flat'>
+                <DropdownItem key="profile" href="/profile" startContent={<UserIcon className={"w-6"} />}>My Profile</DropdownItem>
+                <DropdownItem key="orders" href="/orders" startContent={<ShoppingBagIcon className={"w-6"} />}>Orders</DropdownItem>
+                {<DropdownItem className={profileData.isAdmin ? '' : 'hidden'} key="categories" href="/categories" startContent={<TagIcon className={"w-6"} />} >Categories</DropdownItem>}
+                {<DropdownItem className={profileData.isAdmin ? '' : 'hidden'} key="menu-items" href="/menu-items" startContent={<MenuIcon className={"w-6"} />}>Menu Items</DropdownItem>}
+                {<DropdownItem className={profileData.isAdmin ? '' : 'hidden'} key="users" href="/users" startContent={<UsersIcon className={"w-6"} />}>Users</DropdownItem>}
+                <DropdownItem key="signOut" startContent={<SignOutIcon className={'w-6'} />} onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Button as={Link} href='/cart' className='bg-transparent relative min-w-10' startContent={<CartIcon className={'w-8 stroke-white'} />}>
+              {cartProducts.length > 0 &&
+                <span className='w-4 h-4 rounded-full bg-primary text-dark text-xs text-center absolute right-1 top-0'>{cartProducts.length}</span>
               }
             </Button>
-          </>
+          </div>
         ) : (
-          <>
-            <Link href={'/login'}>Login</Link>
-            <Button href={'/register'} color='primary' className='font-semibold rounded-full px-8 py-2' as={Link}>Sign Up</Button>
-          </>
+          <div className='flex gap-6 items-center'>
+            {session === null &&
+              <>
+                <Link href={'/login'} className='hover:text-primary'>Login</Link>
+                <Button as={Link} color="primary" href={'/register'} className='font-semibold rounded-full px-6 py-2 text-dark'>
+                  Sign Up
+                </Button>
+              </>
+            }
+          </div>
         )}
-      </nav>
-    </header>
+      </NavbarContent>
+    </Navbar>
   )
 }
 

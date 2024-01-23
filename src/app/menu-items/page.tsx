@@ -1,9 +1,9 @@
 'use client'
-import UserTabs from "@/components/UserTabs"
+import UserTabs from "@/components/layout/UserTabs"
 import { useProfile } from "@/components/hooks/useProfile"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import MenuItemsTable from "@/components/MenuItemsTable"
+import MenuItemsTable from "@/components/features/menuItems/MenuItemsTable"
 import RightArrowIcon from "@/icons/RightArrowIcon"
 import MenuItem from "@/types/MenuItem"
 import { Button } from "@nextui-org/react"
@@ -17,9 +17,9 @@ const MenuItemsPage = () => {
 
   function fetchMenuItems() {
     fetch("/api/menu-items")
-     .then((response) => response.json())
-     .then((data) => setMenuItems(data));
-   }
+      .then((response) => response.json())
+      .then((data) => setMenuItems(data));
+  }
 
   useEffect(() => {
     fetchMenuItems()
@@ -34,7 +34,7 @@ const MenuItemsPage = () => {
   }
 
   function handleDeleteMenuItem(menuItem: MenuItem) {
-    const deletionPromise = new Promise(async (resolve, reject) => { 
+    const deletionPromise = new Promise(async (resolve, reject) => {
       const response = await fetch(`/api/menu-items?_id=${menuItem._id}`, {
         method: "DELETE"
       }).then((response) => response.json());
@@ -56,19 +56,23 @@ const MenuItemsPage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <div className="flex px-2">
-          <h1 className="text-2xl font-semibold italic grow text-primary">Menu Items</h1>
-          <Button href={"/menu-items/new"} as={Link} type="button" color="primary" endContent={<RightArrowIcon className={"w-6"} />}>Create New</Button>
-        </div>
-        <div className="mt-12">
-          <MenuItemsTable
-            menuItems={menuItems}
-            onDelete={(menuItem: MenuItem) => { handleDeleteMenuItem(menuItem) }} />
-        </div>
-      </div>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData.isAdmin &&
+        <>
+          <UserTabs admin={profileData.isAdmin} />
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="flex px-2">
+              <h1 className="text-2xl font-semibold italic grow text-primary">Menu Items</h1>
+              <Button href={"/menu-items/new"} as={Link} type="button" color="primary" className="text-dark hover:text-white" endContent={<RightArrowIcon className={"w-6"} />}>Create New</Button>
+            </div>
+            <div className="mt-12">
+              <MenuItemsTable
+                menuItems={menuItems}
+                onDelete={(menuItem: MenuItem) => { handleDeleteMenuItem(menuItem) }} />
+            </div>
+          </div>
+        </>
+      }
     </section>
   )
 }

@@ -1,29 +1,18 @@
 'use client'
-import ProfileForm from '@/components/ProfileForm';
-import UserTabs from '@/components/UserTabs';
+import { useProfile } from '@/components/hooks/useProfile';
+import ProfileForm from '@/components/common/form/ProfileForm';
+import UserTabs from '@/components/layout/UserTabs';
 import UserProfile from '@/types/UserProfile';
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation';
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent } from 'react'
 import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [profileFetched, setProfileFetched] = useState(false);
+  const { data: profileData, loading } = useProfile();
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      fetch(`/api/profile`).then(res => res.json()).then(data => {
-        setUser(data)
-        setIsAdmin(data.isAdmin);
-        setProfileFetched(true);
-      })
-    };
-  }, [session, status])
-
-  if (status === 'loading' || !profileFetched && session) {
+  if (status === 'loading' || loading && session) {
     return 'Loading...'
   }
 
@@ -55,11 +44,15 @@ const ProfilePage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <ProfileForm user={user} onSave={(event, data) => handleProfileUpdate(event, data)} />
-      </div>
+    <section className="pt-10 pb-20">
+      {profileData &&
+        <>
+          <UserTabs admin={profileData.isAdmin} className={profileData.isAdmin ? "max-w-6xl mx-auto" : "max-w-2xl mx-auto"} />
+          <div className="mt-16 max-w-2xl mx-auto">
+            <ProfileForm user={profileData} onSave={(event, data) => handleProfileUpdate(event, data)} />
+          </div>
+        </>
+      }
     </section>
   )
 }

@@ -2,17 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+h1 {
+  @apply text-3xl uppercase font-josefin;
+}
+
+h2 {
+  @apply text-2xl font-josefin;
+}
+
+h3 {
+  @apply text-xl font-josefin;
+}
+
 section.hero{
   @apply block md:grid;
   grid-template-columns: .4fr .6fr;
 }
 
 .input {
-  @apply block w-full mb-2 rounded-xl border p-2 border-gray-300 bg-gray-100
+  @apply block w-full mb-4 rounded-xl border p-2 border-gray-300 bg-gray-100 text-dark
 }
 
 .input:disabled{
-  @apply cursor-not-allowed bg-gray-300
+  @apply cursor-not-allowed bg-dark text-gray-500
 }
 
 *[data-slot="input"] {
@@ -20,7 +32,7 @@ section.hero{
 }
 
 label{
-  @apply text-gray-500 text-sm leading-tight;
+  @apply text-gray-400 text-sm leading-tight;
 }
 
 button[type="button"], a[role="button"] {
@@ -28,7 +40,7 @@ button[type="button"], a[role="button"] {
 }
 
 button[type="submit"]{
-  @apply border-primary bg-primary text-white text-medium font-semibold
+  @apply border-primary bg-primary text-dark text-medium
 }
 
 button:disabled {
@@ -36,12 +48,9 @@ button:disabled {
 }
 
 button[type="submit"]:disabled {
-  @apply bg-red-400 border-0 cursor-not-allowed
+  @apply bg-primary border-0 cursor-not-allowed
 }
 
 .flying-button-parent button{
-  @apply flex w-full justify-center gap-2 px-6 py-2
-  border-primary bg-primary text-white text-medium rounded-full hover:opacity-70 transition-opacity whitespace-nowrap
+  @apply flex w-full justify-center gap-2 px-4 py-2 
 }
-
-

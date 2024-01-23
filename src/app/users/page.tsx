@@ -1,6 +1,6 @@
 'use client'
-import UserTabs from '@/components/UserTabs'
-import UsersTable from '@/components/UsersTable'
+import UserTabs from '@/components/layout/UserTabs'
+import UsersTable from '@/components/features/users/UsersTable'
 import { useProfile } from '@/components/hooks/useProfile'
 import UserProfile from '@/types/UserProfile'
 import React, { useEffect, useState } from 'react'
@@ -24,11 +24,14 @@ const UsersPage = () => {
   }
 
   return (
-    <section className="my-8">
-      <UserTabs admin={profileData.isAdmin} />
-      <div className="block max-w-2xl mx-auto mt-12">
-        <UsersTable users={users} />
-      </div>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData.isAdmin &&
+        <>
+          <UserTabs admin={profileData.isAdmin} />
+          <div className="max-w-4xl mx-auto mt-12">
+            <UsersTable users={users} />
+          </div>
+        </>}
     </section>
   )
 }

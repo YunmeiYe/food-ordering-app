@@ -1,9 +1,9 @@
 'use client'
-import AddressInputs from '@/components/AddressInputs'
-import CartProduct from '@/components/CartProduct'
-import OrderSummary from '@/components/OrderSummary'
+import AddressInputs from '@/components/common/form/AddressInputs'
+import CartProduct from '@/components/features/cart/CartProduct'
+import OrderSummary from '@/components/features/cart/OrderSummary'
 import { useProfile } from '@/components/hooks/useProfile'
-import { CartContext, calCartProductPrice } from '@/components/providers'
+import { CartContext, calCartProductPrice } from '@/util/ContextProvider'
 import { ChevronLeftIcon } from '@/icons/ChevronLeftIcon'
 import { Button, Link } from '@nextui-org/react'
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
@@ -77,7 +77,7 @@ const CartPage = () => {
   }
 
   return (
-    <section className='my-16'>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
       <Link href={'/menu'} className='text-primary font-semibold'>
         <ChevronLeftIcon className={'w-4 mr-2'} />
         <span>Continue shopping</span>
@@ -85,7 +85,7 @@ const CartPage = () => {
       {cartProducts.length > 0 &&
         <div className='grid grid-cols-5 mt-8 gap-12'>
           <div className='col-span-3'>
-            <div className='border-b-1 text-2xl font-semibold py-3 mx-4 text-primary'>Cart</div>
+            <h2 className='border-b-1 font-semibold py-3 text-primary'>Cart</h2>
             <div>
               {cartProducts && cartProducts.map((product, index) => (
                 <CartProduct key={index} product={product}
@@ -95,10 +95,10 @@ const CartPage = () => {
             <OrderSummary subtotal={subtotal} deviveryFee={5} discount={0} paid={false} />
           </div>
           <div className='col-span-2'>
-            <div className='text-2xl font-semibold py-3 mx-4 text-primary'>
+            <h2 className='font-semibold py-3 text-primary'>
               Check Out
-            </div>
-            <div className='rounded-xl p-4 shadow-xl bg-gray-50'>
+            </h2>
+            <div className='rounded-xl p-6 bg-gray-800'>
               <form className='flex flex-col gap-3 mt-3' onSubmit={proceedToCheckOut}>
                 <div>
                   <AddressInputs

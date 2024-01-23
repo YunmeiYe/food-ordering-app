@@ -1,30 +1,38 @@
 'use client'
-import OrdersTable from "@/components/OrdersTable";
-import UserTabs from "@/components/UserTabs";
+import OrdersTable from "@/components/features/orders/OrdersTable";
+import UserTabs from "@/components/layout/UserTabs";
 import { useProfile } from "@/components/hooks/useProfile"
-import SectionHeaders from "@/components/layout/SectionHeaders";
 import Order from "@/types/Order";
 import { useEffect, useState } from "react";
 
 const OrdersPage = () => {
-  const { data: profileData } = useProfile();
+  const { data: profileData, loading } = useProfile();
+  const isAdmin = profileData?.isAdmin;
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     fetch(`/api/orders`)
       .then(res => res.json())
-      .then(data => {console.log(data), setOrders(data.reverse()); })
+      .then(data => { setOrders(data.reverse()); })
   }, [])
 
+  if (loading) {
+    return 'Loading...'
+  }
+
   return (
-    <section className='my-16'>
-      {profileData && <UserTabs admin={profileData?.isAdmin} />}
-      <div className="mt-8">
-      <SectionHeaders subHeader={""} mainHeader={"Orders"}/>
-      </div>
-      <div className="mt-8">
-        {orders && <OrdersTable orders={orders}/>}
-      </div>
+    <section className='pt-10 pb-20 max-w-6xl mx-auto'>
+      {profileData &&
+        <>
+          <UserTabs admin={isAdmin!} className={isAdmin ? "" : "max-w-2xl mx-auto"} />
+          <div className="mt-16 text-center">
+            <h1 className="text-primary italic font-semibold">{isAdmin ? "Orders" : "Order History"}</h1>
+          </div>
+          <div className="mt-4">
+            {orders && <OrdersTable orders={orders} isAdmin={isAdmin!} />}
+          </div>
+        </>
+      }
     </section>
   )
 }
