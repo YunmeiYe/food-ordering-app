@@ -4,12 +4,16 @@ import UserTabs from '@/components/layout/UserTabs'
 import { useProfile } from '@/components/hooks/useProfile'
 import UserProfile from '@/types/UserProfile'
 import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react'
-import { useParams } from 'next/navigation'
+import { redirect, useParams } from 'next/navigation'
 import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
+import Loader from '@/components/common/Loader'
 
 const EditUserPage = () => {
-  const { loading: profileLoading, data: profileData } = useProfile()
+  const { data: session, status } = useSession();
+  const { loading, data: profileData } = useProfile();
+  const isAdmin = profileData?.isAdmin;
   const [user, setUser] = useState<UserProfile | null>(null);
   const { id } = useParams()
 
@@ -23,12 +27,16 @@ const EditUserPage = () => {
     fetchUser()
   }, [])
 
-  if (profileLoading) {
-    return 'Loading user info...'
+  if (status === 'unauthenticated') {
+    redirect('/login');
   }
 
-  if (!profileData?.isAdmin) {
-    return <h1>You are not an admin</h1>
+  if (profileData && !isAdmin) {
+    redirect('/');
+  }
+
+  if (status === 'loading' || loading && session) {
+    return <Loader className={""}/>
   }
 
   async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: UserProfile) {
@@ -59,7 +67,7 @@ const EditUserPage = () => {
 
   return (
     <section className='pt-10 pb-20 max-w-6xl mx-auto'>
-      {profileData.isAdmin &&
+      {profileData &&
         <>
           <UserTabs admin={profileData.isAdmin} />
           <Breadcrumbs size='lg' className="mt-12">

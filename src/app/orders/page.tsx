@@ -4,22 +4,30 @@ import UserTabs from "@/components/layout/UserTabs";
 import { useProfile } from "@/components/hooks/useProfile"
 import Order from "@/types/Order";
 import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/common/Loader";
 
 const OrdersPage = () => {
+  const { data:session, status } = useSession();
   const { data: profileData, loading } = useProfile();
   const isAdmin = profileData?.isAdmin;
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    fetch(`/api/orders`)
+      fetch(`/api/orders`)
       .then(res => res.json())
       .then(data => { setOrders(data.reverse()); })
   }, [])
 
-  if (loading) {
-    return 'Loading...'
+  if (status === 'unauthenticated') {
+    redirect('/login');
   }
 
+  if (status === 'loading' || loading && session) {
+    return <Loader className={""}/>
+  }
+  
   return (
     <section className='pt-10 pb-20 max-w-6xl mx-auto'>
       {profileData &&

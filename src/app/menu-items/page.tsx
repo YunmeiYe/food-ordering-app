@@ -9,10 +9,14 @@ import MenuItem from "@/types/MenuItem"
 import { Button } from "@nextui-org/react"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
+import Loader from "@/components/common/Loader"
 
 const MenuItemsPage = () => {
   const router = useRouter();
-  const { loading: profileLoading, data: profileData } = useProfile()
+  const { data: session, status } = useSession();
+  const { loading, data: profileData } = useProfile();
+  const isAdmin = profileData?.isAdmin;
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
   function fetchMenuItems() {
@@ -25,12 +29,16 @@ const MenuItemsPage = () => {
     fetchMenuItems()
   }, [])
 
-  if (profileLoading) {
-    return 'Loading user info...'
+  if (status === 'unauthenticated') {
+    router.push('/login')
   }
 
-  if (!profileData?.isAdmin) {
-    return <h1>You are not an admin</h1>
+  if (profileData && !isAdmin) {
+    router.push('/')
+  }
+
+  if (status === 'loading' || loading && session) {
+    return <Loader className={""}/>
   }
 
   function handleDeleteMenuItem(menuItem: MenuItem) {
@@ -57,7 +65,7 @@ const MenuItemsPage = () => {
 
   return (
     <section className='pt-10 pb-20 max-w-6xl mx-auto'>
-      {profileData.isAdmin &&
+      {profileData &&
         <>
           <UserTabs admin={profileData.isAdmin} />
           <div className="mt-16 max-w-4xl mx-auto">

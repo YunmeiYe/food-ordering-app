@@ -6,13 +6,18 @@ import { useProfile } from "@/components/hooks/useProfile";
 import { PlusIcon } from "@/icons/PlusIcon";
 import { UploadIcon } from "@/icons/UploadIcon";
 import Category from "@/types/Category";
-import { Button, Input, Tooltip } from "@nextui-org/react";
+import { Button, Input, Spinner, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/common/Loader";
 
 const CategoriesPage = () => {
-  const { loading: profileLoading, data: profileData } = useProfile()
+  const { data: session, status } = useSession();
+  const { loading, data: profileData } = useProfile();
+  const isAdmin = profileData?.isAdmin;
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryName, setCategoryName] = useState('');
   const [categoryImage, setCategoryImage] = useState('');
@@ -25,19 +30,24 @@ const CategoriesPage = () => {
     fetchCategories();
   }, [])
 
+  if (status === 'unauthenticated') {
+    redirect('/login');
+  }
+
+  if (profileData && !isAdmin) {
+    redirect('/');
+  }
+
+  if (status === 'loading' || loading && session) {
+    return <Loader className={""}/>
+  }
+
   function fetchCategories() {
     fetch("/api/categories")
       .then((response) => response.json())
       .then((data) => setCategories(data));
   }
 
-  if (profileLoading) {
-    return 'Loading user info...'
-  }
-
-  if (!profileData?.isAdmin) {
-    return <h1>You are not an admin</h1>
-  }
 
   async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -98,7 +108,7 @@ const CategoriesPage = () => {
 
   return (
     <section className='pt-10 pb-20 max-w-6xl mx-auto'>
-      {profileData.isAdmin &&
+      {profileData &&
         <>
           <UserTabs admin={profileData.isAdmin} />
           <div className="mt-16 max-w-4xl mx-auto">
@@ -168,7 +178,6 @@ const CategoriesPage = () => {
           </div>
         </>
       }
-
     </section>
   )
 }

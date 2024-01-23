@@ -23,31 +23,34 @@ const MenuPage = () => {
       .then(data => { setMenuItems(data) });
   }, [])
 
-
   return (
     <section className="py-12">
-      <SectionHeader
-        header={'Our Menu'}
-        description={'From classic favorites to innovative creations, our hot pizza meals promise a delightful symphony of flavors that will leave you craving for more.'}
-      />
-      <div className='flex gap-3 justify-center mb-12'>
-        {categories && categories.map(category => (
-          <CategoryTag
-            key={category._id}
-            name={category.name}
-            onClick={(name: string) => setTag(name)} isSelected={tag === category.name}
+      {categories && menuItems &&
+        <>
+          <SectionHeader
+            header={'Our Menu'}
+            description={'From classic favorites to innovative creations, our hot pizza meals promise a delightful symphony of flavors that will leave you craving for more.'}
           />
-        ))}
-      </div>
-      <div className='grid grid-cols-4 gap-6'>
-        {filteredCategories && filteredCategories.map(category => (
-          menuItems && menuItems.filter(item => item.category === category._id).map((item, index) => (
-            <div className='p-4' key={item._id}>
-              <MenuItemCard menuItem={item} />
-            </div>
-          ))
-        ))}
-      </div>
+          <div className='flex gap-3 justify-center mb-12'>
+            {categories.map(category => (
+              <CategoryTag
+                key={category._id}
+                name={category.name}
+                onClick={(name: string) => setTag(name)} isSelected={tag === category.name}
+              />
+            ))}
+          </div>
+          <div className='grid grid-cols-4 gap-6'>
+            {filteredCategories.map(category => (
+              menuItems.filter(item => item.category === category._id).map((item, index) => (
+                <div className='p-4' key={item._id}>
+                  <MenuItemCard menuItem={item} />
+                </div>
+              ))
+            ))}
+          </div>
+        </>
+      }
     </section>
   )
 }

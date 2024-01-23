@@ -7,17 +7,18 @@ import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation';
 import React, { FormEvent } from 'react'
 import toast from 'react-hot-toast';
+import Loader from '@/components/common/Loader';
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
   const { data: profileData, loading } = useProfile();
 
-  if (status === 'loading' || loading && session) {
-    return 'Loading...'
-  }
-
   if (status === 'unauthenticated') {
     redirect('/login');
+  }
+
+  if (status === 'loading' || loading && session) {
+    return <Loader className={""}/>
   }
 
   async function handleProfileUpdate(event: FormEvent<HTMLFormElement>, data: UserProfile) {
