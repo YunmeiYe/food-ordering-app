@@ -1,4 +1,5 @@
 'use client';
+import Loader from '@/components/common/Loader';
 import CategoryTag from '@/components/features/categories/CategoryTag';
 import MenuItemCard from '@/components/features/menuItems/MenuItemCard';
 import SectionHeader from '@/components/layout/SectionHeader';
@@ -11,6 +12,7 @@ const MenuPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [tag, setTag] = useState('');
+  const [loading, setLoading] = useState(true)
 
   const filteredCategories = categories.filter(category => category.name.includes(tag))
 
@@ -21,7 +23,12 @@ const MenuPage = () => {
     fetch('/api/menu-items')
       .then(res => res.json())
       .then(data => { setMenuItems(data) });
+    setLoading(false);
   }, [])
+
+  if (loading) {
+    return <Loader className={''} />
+  }
 
   return (
     <section className="py-12">

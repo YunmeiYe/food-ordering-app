@@ -89,7 +89,7 @@ const CartPage = () => {
             <div>
               {cartProducts && cartProducts.map((product, index) => (
                 <CartProduct key={index} product={product}
-                  onRemove={() => removeCartProduct(index)} />
+                onRemove={() => removeCartProduct(index)} productPrice={calCartProductPrice(product)} />
               ))}
             </div>
             <OrderSummary subtotal={subtotal} deviveryFee={5} discount={0} paid={false} />

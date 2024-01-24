@@ -23,7 +23,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,500,700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-poppins bg-[url('/assets/bg_dark.jpg')] bg-no-repeat bg-fixed">
+      <body className="font-poppins bg-[url('/assets/bg_dark.jpg')] bg-repeat bg-fixed">
         <UIProvider>
           <main>
             <AppContextProvider>

@@ -4,10 +4,11 @@ import { Tooltip } from '@nextui-org/react'
 
 interface CartProductProps {
   product: CartProduct,
+  productPrice: number,
   onRemove?: () => void,
 }
 
-const CartProduct = ({ product, onRemove }: CartProductProps) => {
+const CartProduct = ({ product, productPrice, onRemove }: CartProductProps) => {
   return (
     <div className='grid grid-cols-8 gap-4 border-b pt-2'>
       <div className='col-span-2'>
@@ -16,14 +17,14 @@ const CartProduct = ({ product, onRemove }: CartProductProps) => {
       <div className='col-span-3 px-4'>
         <p className='font-semibold'>{product.menuItem.name}</p>
         {product.selectedSize && (
-          <div className='text-sm text-gray-300'>
-            Size: <span>{product.selectedSize.name}</span>
+          <div className='text-sm text-gray-300 py-1'>
+            Size: <span>{product.selectedSize.name} + ${ (product.selectedSize.price as number).toFixed(2)}</span>
           </div>
         )}
         {product.selectedExtras.length > 0 && (
           <div className='text-sm text-gray-300'>
             {product.selectedExtras.map((extra, index) => (
-              <div key={index}>{extra.name} ${((extra.price) as number).toFixed(2)}</div>
+              <div key={index}>{extra.name} + ${((extra.price) as number).toFixed(2)}</div>
             ))}
           </div>
         )}
@@ -33,7 +34,7 @@ const CartProduct = ({ product, onRemove }: CartProductProps) => {
         <p>1</p>
       </div>
       <div className='text-right font-semibold'>
-        ${(product.menuItem.basePrice as number).toFixed(2)}
+        ${(productPrice).toFixed(2)}
       </div>
       {!!onRemove && (
         <Tooltip content='Remove'>
