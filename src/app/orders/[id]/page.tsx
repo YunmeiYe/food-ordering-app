@@ -57,7 +57,7 @@ const OrderPage = () => {
             <div className='col-span-3'>
               <h2 className='border-b-1 font-semibold py-3 text-primary'>Order Details </h2>
               {order.cartProducts.map((product: CartProductInfo, index: number) => (
-                <CartProduct key={index} product={product} />
+                <CartProduct key={index} product={product} productPrice={calCartProductPrice(product)} />
               ))}
               <OrderSummary orderId={order._id} subtotal={subtotal} deviveryFee={5} discount={0} paid={order.paid} />
             </div>
