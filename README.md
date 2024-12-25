@@ -34,6 +34,3 @@ Admin Dashboard
 ## Getting Started
 
 View a demo of this app [here](https://pizza-fiesta.vercel.app/).<br><br>
-To access admin features, you can use the following account to log in:<br>
-``Email: admin@test.com
-Password: 12345678``
